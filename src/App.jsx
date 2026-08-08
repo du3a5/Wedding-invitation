@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import EnvelopeLanding from './components/EnvelopeLanding';
 import HeroVideo from './components/HeroVideo';
 import InvitationVerses from './components/InvitationVerses';
@@ -16,6 +16,8 @@ export default function App() {
   const [isAudioMuted, setIsAudioMuted] = useState(true);
 
   const audioRef = useRef(null);
+  const autoScrollRef = useRef(null);
+  const resumeTimeoutRef = useRef(null);
 
   const t = translations[lang];
 
@@ -26,6 +28,64 @@ export default function App() {
     document.documentElement.lang = nextLang;
   };
 
+  const stopAutoScroll = () => {
+    if (autoScrollRef.current) {
+      cancelAnimationFrame(autoScrollRef.current);
+      autoScrollRef.current = null;
+    }
+  };
+
+  const startGentleAutoScroll = () => {
+    stopAutoScroll();
+
+    let lastTime = performance.now();
+    const scrollStep = (timestamp) => {
+      const delta = timestamp - lastTime;
+      if (delta >= 16) {
+        window.scrollBy({ top: 0.6, behavior: 'auto' });
+        lastTime = timestamp;
+      }
+      autoScrollRef.current = requestAnimationFrame(scrollStep);
+    };
+
+    autoScrollRef.current = requestAnimationFrame(scrollStep);
+  };
+
+  const pauseAutoScrollTemporary = () => {
+    // 1. Immediately pause ongoing scroll
+    stopAutoScroll();
+
+    // 2. Clear any pending resume timer
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+    }
+
+    // 3. Schedule auto-scroll to resume after 4.5s of inactivity
+    resumeTimeoutRef.current = setTimeout(() => {
+      startGentleAutoScroll();
+    }, 4500);
+  };
+
+  useEffect(() => {
+    const userInteractionEvents = ['wheel', 'touchstart', 'touchmove', 'mousedown', 'keydown', 'pointerdown'];
+    
+    const handleUserInteraction = () => {
+      pauseAutoScrollTemporary();
+    };
+
+    userInteractionEvents.forEach(evt => {
+      window.addEventListener(evt, handleUserInteraction, { passive: true });
+    });
+
+    return () => {
+      stopAutoScroll();
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+      userInteractionEvents.forEach(evt => {
+        window.removeEventListener(evt, handleUserInteraction);
+      });
+    };
+  }, []);
+
   const startAudioOnEnvelopeOpen = () => {
     if (audioRef.current && isAudioMuted) {
       audioRef.current.play().then(() => {
@@ -34,6 +94,10 @@ export default function App() {
         console.log("Audio play error:", err);
       });
     }
+    // Start gentle auto scroll 1.5s after envelope opens
+    setTimeout(() => {
+      startGentleAutoScroll();
+    }, 1500);
   };
 
   const toggleAudio = () => {
@@ -98,7 +162,7 @@ export default function App() {
         {/* Section 5: Event Details */}
         <EventDetails t={t} />
 
-        {/* Section 6 & 7: Unified Congratulations Wall (includes Couple Illustration & Live Sheet Wishes) */}
+        {/* Section 6 & 7: Unified Congratulations Wall */}
         <CongratulationsWall t={t} />
       </main>
 

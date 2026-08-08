@@ -13,7 +13,7 @@ export default function InvitationVerses({ lang, t }) {
       dir={isEn ? "ltr" : "rtl"}
       className="relative w-full py-20 px-4 sm:px-8 md:px-12 bg-[#FAF6F0] flex flex-col items-center justify-center text-center overflow-hidden"
     >
-      <ScrollReveal className="max-w-3xl md:max-w-4xl w-full mx-auto relative p-8 sm:p-14 md:p-16 rounded-3xl bg-[#FFFDF9]/95 border-2 border-[#C5A059]/40 shadow-2xl backdrop-blur-md">
+      <ScrollReveal className="max-w-4xl md:max-w-5xl w-full mx-auto relative p-8 sm:p-14 md:p-16 rounded-3xl bg-[#FFFDF9]/95 border-2 border-[#C5A059]/40 shadow-2xl backdrop-blur-md">
         
         {/* Outer Inset Border Frame */}
         <div className="absolute inset-3 border border-[#C5A059]/25 rounded-2xl pointer-events-none"></div>
@@ -27,34 +27,34 @@ export default function InvitationVerses({ lang, t }) {
         <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#C5A059] rounded-bl-md"></div>
         <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#C5A059] rounded-br-md"></div>
 
-        {/* Bismillah Opening Header */}
-        <div className="font-thmanyah text-2xl sm:text-4xl text-[#580E18] font-bold mb-10 tracking-wide drop-shadow-xs">
+        {/* Bismillah Opening Header: THMANYAH FONT FOR MAIN HEADING */}
+        <div className="font-thmanyah text-3xl sm:text-5xl text-[#580E18] font-bold mb-10 tracking-wide drop-shadow-xs">
           {t.bismillah}
         </div>
 
-        {/* EXACT REFERENCE MATCH POETRY STANZA (2 Rows of Side-by-Side Hemistiches with Center Gap) */}
+        {/* ARABIC POETRY STANZA: AMIRI FONT FOR LITERARY POETRY WITH PERFECT HEMISTICH ALIGNMENT */}
         <div 
           dir="rtl"
-          className="font-thmanyah text-base sm:text-xl md:text-2xl text-[#2D1E18] space-y-6 my-10 font-medium max-w-2xl mx-auto"
+          className="font-amiri text-xl sm:text-2xl md:text-3xl text-[#580E18] font-bold space-y-6 my-10 max-w-3xl mx-auto"
         >
           {/* Row 1 */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-10 items-center border-b border-[#C5A059]/15 pb-4">
-            <span className="text-right sm:text-end text-[#580E18] font-bold">
-              دَانَتْ قُطُوفُ المُنَى، وَالسَّعْدُ مُبْتَسِمُ
-            </span>
-            <span className="text-left sm:text-start text-[#2D1E18]">
-              وَطَابَ فِي لَيْلَةِ الأَفْرَاحِ جَمْعُكُمُ
-            </span>
+          <div className="grid grid-cols-2 gap-4 sm:gap-12 items-baseline border-b border-[#C5A059]/20 pb-4">
+            <div className="text-right sm:text-end text-[#580E18]">
+              دَنَتْ قُطُوفُ المُنَى وَالسَّعْدُ مُبْتَسِمُ
+            </div>
+            <div className="text-left sm:text-start text-[#580E18]">
+              وَطَابَ فِي لَيْلَةِ الأَفْرَاحِ جَمْعُكُُم
+            </div>
           </div>
 
           {/* Row 2 */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-10 items-center pb-2">
-            <span className="text-right sm:text-end text-[#580E18] font-bold">
-              فَأَقْبِلُوا كَيْ يَتِمَّ النُّورُ مُكْتَمِلًا
-            </span>
-            <span className="text-left sm:text-start text-[#2D1E18]">
-              فَإِنَّمَا عِطْرُ هَذَا الحَفْلِ وَصْلُكُمُ
-            </span>
+          <div className="grid grid-cols-2 gap-4 sm:gap-12 items-baseline pb-2">
+            <div className="text-right sm:text-end text-[#580E18]">
+              فَأَقْبِلُوا كَيْ يَتَمَ النُّورُ مُكْتَمِلًا
+            </div>
+            <div className="text-left sm:text-start text-[#580E18]">
+              فَإِنَّمَا عِطْرُ هَذَا الحَفْلِ وَصْلَكُمُ
+            </div>
           </div>
         </div>
 
@@ -62,99 +62,130 @@ export default function InvitationVerses({ lang, t }) {
         <div className="flex items-center justify-center my-10 gap-4">
           <div className="h-[1px] w-24 bg-gradient-to-r from-transparent to-[#C5A059]"></div>
           <svg className="w-6 h-6 text-[#C5A059]" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
+            <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 9.5 Z" />
           </svg>
           <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-[#C5A059]"></div>
         </div>
 
-        {/* Welcoming Hosts Callout */}
-        <div className={`font-thmanyah text-lg sm:text-2xl text-[#4A0D16] leading-[2.2] mb-8 ${isEn ? 'font-tajawal font-medium' : ''}`}>
+        {/* Welcoming Hosts Callout (Amiri Font) */}
+        <div className={`font-amiri text-xl sm:text-2xl text-[#4A0D16] leading-[2.2] mb-10 ${isEn ? 'font-tajawal font-medium' : ''}`}>
           {isEn ? (
             <p>
               With hearts full of love and joy, <span className="font-bold text-[#580E18]">{t.hostSaad}</span> & <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> cordially invite you to celebrate the wedding of their children
             </p>
           ) : (
             <p>
-              بِقُلُوبٍ تَفِيضُ بِالمَحَبَّةِ، وَتَتَّسِعُ لِفَرْحَةِ اللِّقَاءِ
+              بِقُلُوبٍ تَفِيضُ بِالمَحَبَّةِ، وَتَتَّسِعُ لِفَرَحَةِ اللَّقَاءِ، يتشرف كلُّ من:
               <br />
-              يتشرف كلٌّ من: <span className="font-bold text-[#580E18] underline decoration-[#C5A059]/40 underline-offset-8">الشيخ/ سعد مختار سعد</span> و <span className="font-bold text-[#580E18] underline decoration-[#C5A059]/40 underline-offset-8">الفاضل/ محمد أنور</span>
+              <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">الشيخ/ سعد مختار</span> و <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">الرائد/ محمد أنور</span>
               <br />
-              بدعوتكم لحضور حفل زفاف نجليهما
+              {t.invitePhrase}
             </p>
           )}
         </div>
 
-        {/* Couple Names Images Container with Parent Titles matching Reference */}
-        <div className="my-10 flex items-center justify-center gap-6 sm:gap-12 flex-wrap py-2">
+        {/* GOLD NAME CALLIGRAPHY IMAGES WITH "على" CONNECTOR & SUBTITLES */}
+        <div className="my-12 flex items-center justify-center gap-6 sm:gap-10 flex-wrap py-2">
           
           {/* Groom Block: Mohammed + "بن سعد" */}
           <div className="flex flex-col items-center">
-            <div className="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-sm flex items-center justify-center">
-              <div className="h-16 sm:h-24 md:h-28 flex items-center justify-center">
+            <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
+              <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
                 {!mohammedImgError ? (
                   <img
-                    src="assets/images/names/name-mohammed.png"
+                    src="assets/images/names/name-mohammed.png?v=3"
                     alt="محمد"
                     onError={() => setMohammedImgError(true)}
-                    className="h-full object-contain max-w-[160px] sm:max-w-[220px] filter drop-shadow-xs"
+                    className="h-full object-contain max-w-[180px] sm:max-w-[240px] filter drop-shadow-sm"
                   />
                 ) : (
-                  <span className="font-thmanyah text-4xl sm:text-5xl font-bold text-[#580E18]">
+                  <span className="font-amiri text-4xl sm:text-5xl font-bold text-[#580E18]">
                     {t.groomName}
                   </span>
                 )}
               </div>
             </div>
-            {!isEn && (
-              <span className="font-thmanyah text-sm sm:text-base text-[#8C6D33] font-bold mt-2">
-                بن سعد
-              </span>
-            )}
+            <span className="font-amiri text-lg sm:text-xl text-[#8C6D33] font-bold mt-2.5">
+              {t.groomFather}
+            </span>
           </div>
 
-          {/* Connection Symbol */}
-          <span className="font-thmanyah text-3xl sm:text-4xl font-bold text-[#C5A059] self-center pb-6">
+          {/* Connection Symbol "على" / "to" */}
+          <span className="font-amiri text-3xl sm:text-5xl font-bold text-[#C5A059] self-center pb-8">
             {t.andWord}
           </span>
 
           {/* Bride Block: Ghada + "بنت محمد" */}
           <div className="flex flex-col items-center">
-            <div className="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-sm flex items-center justify-center">
-              <div className="h-16 sm:h-24 md:h-28 flex items-center justify-center">
+            <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
+              <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
                 {!ghadaImgError ? (
                   <img
-                    src="assets/images/names/name-ghada.png"
+                    src="assets/images/names/name-ghada.png?v=3"
                     alt="غادة"
                     onError={() => setGhadaImgError(true)}
-                    className="h-full object-contain max-w-[160px] sm:max-w-[220px] filter drop-shadow-xs"
+                    className="h-full object-contain max-w-[180px] sm:max-w-[240px] filter drop-shadow-sm"
                   />
                 ) : (
-                  <span className="font-thmanyah text-4xl sm:text-5xl font-bold text-[#580E18]">
+                  <span className="font-amiri text-4xl sm:text-5xl font-bold text-[#580E18]">
                     {t.brideName}
                   </span>
                 )}
               </div>
             </div>
-            {!isEn && (
-              <span className="font-thmanyah text-sm sm:text-base text-[#8C6D33] font-bold mt-2">
-                بنت محمد
-              </span>
-            )}
+            <span className="font-amiri text-lg sm:text-xl text-[#8C6D33] font-bold mt-2.5">
+              {t.brideFather}
+            </span>
           </div>
 
         </div>
 
-        {/* Ceremony Date & Venue Details Paragraph */}
-        <div className={`font-thmanyah text-lg sm:text-2xl text-[#2D1E18] leading-[2.2] space-y-8 ${isEn ? 'font-tajawal' : ''}`}>
-          <p>
-            {t.eventDetailsParagraph}
-          </p>
+        {/* PLAIN MINIMALIST TYPOGRAPHY FOR 3-COLUMN EVENT DETAILS (NO background box, NO icons, NO colored cards) */}
+        <div className="my-12 py-6 border-y border-[#C5A059]/35 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          
+          {/* Column 1: Date (2026 / 10 / سبتمبر) */}
+          <div className="flex flex-col items-center justify-center p-3 border-b md:border-b-0 md:border-l border-[#C5A059]/30">
+            <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
+              {t.dateLabel}
+            </span>
+            <div className="flex items-baseline justify-center gap-1.5 font-amiri text-[#580E18]">
+              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">2026 /</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#580E18]">10</span>
+              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">/ سبتمبر</span>
+            </div>
+          </div>
 
-          <div className="p-5 sm:p-6 rounded-2xl bg-[#F7ECE9]/80 border-r-4 border-[#580E18] my-8 italic text-base sm:text-xl text-[#580E18] shadow-inner">
+          {/* Column 2 (Center): Venue & Location */}
+          <div className="flex flex-col items-center justify-center p-3 border-b md:border-b-0 md:border-l border-[#C5A059]/30">
+            <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
+              {t.venueLabel}
+            </span>
+            <span className="font-amiri text-xl sm:text-2xl font-bold text-[#580E18]">
+              {t.colVenueLoc}
+            </span>
+          </div>
+
+          {/* Column 3: Day & Time (الخميس / 8 / مساءً) */}
+          <div className="flex flex-col items-center justify-center p-3">
+            <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
+              {t.timeLabel}
+            </span>
+            <div className="flex items-baseline justify-center gap-1.5 font-amiri text-[#580E18]">
+              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">الخميس /</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#580E18]">8</span>
+              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">/ مساءً</span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Modesty & Blessing Note (Amiri Font) */}
+        <div className={`font-amiri text-xl sm:text-2xl text-[#2D1E18] leading-[2.2] space-y-6 ${isEn ? 'font-tajawal' : ''}`}>
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FFFDF9] border-r-4 border-[#580E18] my-8 italic text-lg sm:text-xl text-[#580E18] shadow-xs">
             "{t.modestyNote}"
           </div>
 
-          <p className="text-base sm:text-xl text-[#580E18] font-bold pt-2 tracking-wide">
+          <p className="text-lg sm:text-xl text-[#580E18] font-bold pt-2 tracking-wide">
             {t.closingVerseText}
           </p>
         </div>

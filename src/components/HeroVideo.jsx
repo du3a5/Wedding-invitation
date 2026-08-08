@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Volume2, VolumeX, ChevronDown } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 export default function HeroVideo({ isAudioMuted, toggleAudio, t }) {
@@ -13,13 +13,6 @@ export default function HeroVideo({ isAudioMuted, toggleAudio, t }) {
       });
     }
   }, []);
-
-  const scrollToNextSection = () => {
-    const nextSection = document.getElementById('invitation-verses');
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#1F120E]">
@@ -71,21 +64,12 @@ export default function HeroVideo({ isAudioMuted, toggleAudio, t }) {
         {/* Decorative Top Flourish */}
         <div className="w-20 h-[1.5px] bg-gradient-to-r from-transparent via-[#E5C158] to-transparent mb-8 opacity-90"></div>
         
-        <h1 className="font-thmanyah text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-[#FAF6F0] font-bold tracking-wide leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
+        <h1 className="font-cairo text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-[#FAF6F0] font-bold tracking-wide leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
           {t.heroOverlay}
         </h1>
 
         <div className="w-28 h-[1.5px] bg-gradient-to-r from-transparent via-[#E5C158] to-transparent mt-8 opacity-90"></div>
       </ScrollReveal>
-
-      {/* Animated Down Chevron Scroll Indicator */}
-      <button
-        onClick={scrollToNextSection}
-        aria-label="النزول للأسفل"
-        className="absolute bottom-8 z-20 flex flex-col items-center text-[#FAF6F0] hover:text-[#E5C158] transition-colors cursor-pointer"
-      >
-        <ChevronDown className="w-8 h-8 animate-bounce-slow drop-shadow-md text-[#E5C158]" />
-      </button>
     </section>
   );
 }

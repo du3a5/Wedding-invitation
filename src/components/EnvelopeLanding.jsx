@@ -12,125 +12,123 @@ export default function EnvelopeLanding({ onOpen, onPlayAudio }) {
     setIsClicked(true);
     if (onOpen) onOpen();
 
+    // 1000ms (1.0s) total duration
     setTimeout(() => {
       setIsFinished(true);
-    }, 1400);
+    }, 1000);
   };
 
   if (isFinished) return null;
 
   return (
     <div 
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#F8F0EC] overflow-hidden transition-opacity duration-700 ${
-        isClicked ? 'pointer-events-none' : ''
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#F7F2EC] overflow-hidden transition-opacity duration-[1000ms] cubic-bezier(0.4,0,0.2,1) ${
+        isClicked ? 'pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Background Soft Linen Overlay matching envelope tone */}
-      <div className="absolute inset-0 bg-[radial-gradient(#D8B7B2_0.6px,transparent_0.6px)] [background-size:22px_22px] opacity-15"></div>
+      {/* 1. ATMOSPHERIC RADIAL LIGHT VIGNETTE & HALO BEHIND ENVELOPE */}
+      <div className="absolute w-[95vw] max-w-[850px] aspect-square rounded-full bg-[radial-gradient(circle,rgba(255,254,250,1)_0%,rgba(243,230,218,0.75)_55%,rgba(225,208,192,0.4)_80%,transparent_100%)] blur-3xl pointer-events-none z-0"></div>
 
-      {/* Seamless Envelope Container (NO box-shadow, NO rounded corners, NO distinct card outline) */}
-      <div className="relative w-[94vw] max-w-[460px] sm:max-w-[540px] aspect-[4/5] flex items-center justify-center">
+      {/* 2. ROMANTIC GOLDEN CANDLELIT BOKEH PARTICLES (Replaced Petals) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
         
-        {/* Flap 1: Top Flap Clipped */}
-        <div 
-          style={{ clipPath: 'polygon(0 0, 100% 0, 50% 50%)' }}
-          className={`absolute inset-0 z-30 transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-            isClicked 
-              ? '-translate-y-full opacity-0 duration-1200' 
-              : 'translate-y-0 opacity-100'
-          }`}
-        >
-          <img
-            src="assets/images/logo/envelope.png"
-            alt="Top Flap"
-            className="w-full h-full object-contain select-none pointer-events-none"
-          />
-        </div>
+        {/* Golden Bokeh 1 (Top Left) */}
+        <div className="absolute top-[12%] left-[10%] w-10 h-10 rounded-full bg-[radial-gradient(circle,#E5C158_0%,rgba(197,160,89,0.3)_60%,transparent_100%)] blur-md animate-bokeh-pulse [animation-delay:0s]"></div>
 
-        {/* Flap 2: Bottom Flap Clipped */}
-        <div 
-          style={{ clipPath: 'polygon(0 100%, 100% 100%, 50% 50%)' }}
-          className={`absolute inset-0 z-20 transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-            isClicked 
-              ? 'translate-y-full opacity-0 duration-1200' 
-              : 'translate-y-0 opacity-100'
-          }`}
-        >
-          <img
-            src="assets/images/logo/envelope.png"
-            alt="Bottom Flap"
-            className="w-full h-full object-contain select-none pointer-events-none"
-          />
-        </div>
+        {/* Golden Bokeh 2 (Top Right) */}
+        <div className="absolute top-[18%] right-[12%] w-14 h-14 rounded-full bg-[radial-gradient(circle,#F5E190_0%,rgba(229,193,88,0.35)_60%,transparent_100%)] blur-lg animate-bokeh-pulse [animation-delay:1.5s]"></div>
 
-        {/* Flap 3: Left Flap Clipped */}
-        <div 
-          style={{ clipPath: 'polygon(0 0, 50% 50%, 0 100%)' }}
-          className={`absolute inset-0 z-10 transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-            isClicked 
-              ? '-translate-x-full opacity-0 duration-1200' 
-              : 'translate-x-0 opacity-100'
-          }`}
-        >
-          <img
-            src="assets/images/logo/envelope.png"
-            alt="Left Flap"
-            className="w-full h-full object-contain select-none pointer-events-none"
-          />
-        </div>
+        {/* Golden Bokeh 3 (Center Left) */}
+        <div className="absolute top-[42%] left-[6%] w-12 h-12 rounded-full bg-[radial-gradient(circle,#C5A059_0%,rgba(229,193,88,0.25)_60%,transparent_100%)] blur-md animate-bokeh-pulse [animation-delay:3.2s]"></div>
 
-        {/* Flap 4: Right Flap Clipped */}
-        <div 
-          style={{ clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)' }}
-          className={`absolute inset-0 z-10 transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-            isClicked 
-              ? 'translate-x-full opacity-0 duration-1200' 
-              : 'translate-x-0 opacity-100'
-          }`}
-        >
-          <img
-            src="assets/images/logo/envelope.png"
-            alt="Right Flap"
-            className="w-full h-full object-contain select-none pointer-events-none"
-          />
-        </div>
+        {/* Golden Bokeh 4 (Center Right) */}
+        <div className="absolute top-[48%] right-[8%] w-16 h-16 rounded-full bg-[radial-gradient(circle,#E5C158_0%,rgba(197,160,89,0.3)_60%,transparent_100%)] blur-lg animate-bokeh-pulse [animation-delay:4.5s]"></div>
 
-        {/* CENTERED WAX SEAL BUTTON WITH GLOW + ROTATION INTERACTION */}
-        <div className="absolute z-40 flex flex-col items-center cursor-pointer group">
+        {/* Golden Bokeh 5 (Bottom Left) */}
+        <div className="absolute bottom-[16%] left-[15%] w-14 h-14 rounded-full bg-[radial-gradient(circle,#F5E190_0%,rgba(229,193,88,0.35)_60%,transparent_100%)] blur-lg animate-bokeh-pulse [animation-delay:2.1s]"></div>
+
+        {/* Golden Bokeh 6 (Bottom Right) */}
+        <div className="absolute bottom-[20%] right-[16%] w-10 h-10 rounded-full bg-[radial-gradient(circle,#E5C158_0%,rgba(197,160,89,0.3)_60%,transparent_100%)] blur-md animate-bokeh-pulse [animation-delay:5.8s]"></div>
+
+        {/* Golden Bokeh 7 (Top Center Left) */}
+        <div className="absolute top-[8%] left-[32%] w-8 h-8 rounded-full bg-[radial-gradient(circle,#C5A059_0%,rgba(229,193,88,0.25)_60%,transparent_100%)] blur-sm animate-bokeh-pulse [animation-delay:3.8s]"></div>
+
+        {/* Golden Bokeh 8 (Bottom Center Right) */}
+        <div className="absolute bottom-[10%] right-[34%] w-12 h-12 rounded-full bg-[radial-gradient(circle,#E5C158_0%,rgba(197,160,89,0.3)_60%,transparent_100%)] blur-md animate-bokeh-pulse [animation-delay:0.9s]"></div>
+
+      </div>
+
+      {/* 3. FULL-SCREEN WARM RADIAL LIGHT REVEAL FLARE ON CLICK */}
+      <div 
+        className={`absolute inset-0 z-40 pointer-events-none transition-all duration-[1000ms] cubic-bezier(0.4,0,0.2,1) ${
+          isClicked 
+            ? 'opacity-100 scale-125 bg-[radial-gradient(circle_at_68%_48%,#FAF5EF_0%,rgba(247,242,236,0.98)_45%,rgba(229,193,88,0.75)_65%,transparent_85%)] blur-md' 
+            : 'opacity-0 scale-95 bg-transparent'
+        }`}
+      ></div>
+
+      {/* 4. ENVELOPE CONTAINER */}
+      <div 
+        className={`relative z-20 w-[94vw] max-w-[540px] sm:max-w-[620px] aspect-[4/5] max-h-[90vh] flex items-center justify-center transition-all duration-[1000ms] cubic-bezier(0.4,0,0.2,1) transform ${
+          isClicked 
+            ? 'scale-[1.05] opacity-0 blur-[3px]' 
+            : 'scale-100 opacity-100'
+        }`}
+      >
+        {/* Photorealistic Envelope Image */}
+        <img
+          src="assets/images/logo/envelope.png?v=14"
+          alt="دعوة الزفاف"
+          className="w-full h-full object-contain select-none pointer-events-none filter drop-shadow-[0_22px_45px_rgba(65,30,20,0.16)]"
+        />
+
+        {/* 5. WAX SEAL BUTTON */}
+        <div className="absolute top-[48%] right-[22%] -translate-y-1/2 z-50 flex flex-col items-center cursor-pointer group w-[21%] max-w-[130px] min-w-[78px]">
+          
           <button
             onClick={handleSealClick}
             aria-label="افتتاح الدعوة"
-            className={`relative w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-600 ease-out transform ${
-              isClicked 
-                ? 'scale-125 rotate-15 opacity-0' 
-                : 'hover:scale-105 active:scale-95'
-            }`}
+            className="relative w-full aspect-square flex items-center justify-center"
           >
-            {/* Outer Radial Glow Halo */}
+            {/* Soft Ambient Glow Halo on Hover */}
             <div 
-              className={`absolute inset-0 rounded-full transition-all duration-500 ${
+              className={`absolute inset-0 rounded-full transition-all duration-400 ${
                 isClicked 
-                  ? 'bg-[radial-gradient(circle,#E5C158_0%,rgba(197,160,89,0.9)_50%,transparent_75%)] blur-xl opacity-100 scale-150' 
-                  : 'group-hover:bg-[radial-gradient(circle,rgba(229,193,88,0.5)_0%,transparent_70%)] blur-lg opacity-0 group-hover:opacity-100'
+                  ? 'opacity-0' 
+                  : 'group-hover:bg-[radial-gradient(circle,rgba(229,193,88,0.7)_0%,transparent_70%)] blur-xl opacity-0 group-hover:opacity-100'
+              }`}
+            ></div>
+
+            {/* EXPANDING WARM GOLDEN AURA BURST ON CLICK */}
+            <div 
+              className={`absolute inset-0 rounded-full pointer-events-none transition-all duration-[1000ms] cubic-bezier(0.4,0,0.2,1) ${
+                isClicked 
+                  ? 'scale-[4.5] bg-[radial-gradient(circle,rgba(229,193,88,0.95)_0%,rgba(197,160,89,0.85)_40%,transparent_75%)] blur-2xl opacity-100' 
+                  : 'scale-100 bg-transparent opacity-0'
               }`}
             ></div>
 
             {/* Wax Seal Image */}
             <img
-              src="assets/images/logo/wax-seal.png"
-              alt="ختم الشمع"
-              className={`relative z-10 w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(65,10,16,0.65)] transition-all duration-500 ${
-                isClicked ? 'drop-shadow-[0_0_35px_rgba(229,193,88,0.95)]' : 'group-hover:drop-shadow-[0_0_20px_rgba(197,160,89,0.8)]'
+              src="assets/images/logo/wax-seal.png?v=14"
+              alt="ختم الشمع - زار الفرح دارنا"
+              className={`relative z-10 w-full h-full object-contain filter drop-shadow-[0_8px_18px_rgba(65,20,10,0.4)] transition-all duration-[800ms] cubic-bezier(0.4,0,0.2,1) ${
+                isClicked 
+                  ? 'scale-115 opacity-0 drop-shadow-[0_0_50px_rgba(229,193,88,1)]' 
+                  : 'group-hover:scale-105 group-hover:drop-shadow-[0_0_20px_rgba(197,160,89,0.85)]'
               }`}
             />
           </button>
 
-          {/* Interactive Hint Text below Seal */}
-          <span className={`mt-5 text-sm font-tajawal text-[#580E18] font-bold tracking-wide transition-opacity duration-300 ${
-            isClicked ? 'opacity-0' : 'opacity-100 animate-pulse'
-          }`}>
-            اضغط على الختم لفتح الدعوة ✦
+          {/* Interactive Hint Text under Seal */}
+          <span 
+            className={`mt-3 text-xs sm:text-sm font-tajawal text-[#580E18] font-bold tracking-wide transition-opacity duration-300 whitespace-nowrap ${
+              isClicked ? 'opacity-0' : 'opacity-100 animate-pulse'
+            }`}
+          >
+            اضغط لفتح الدعوة ✦
           </span>
+
         </div>
 
       </div>

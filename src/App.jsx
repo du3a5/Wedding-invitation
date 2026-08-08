@@ -42,7 +42,8 @@ export default function App() {
     const scrollStep = (timestamp) => {
       const delta = timestamp - lastTime;
       if (delta >= 16) {
-        window.scrollBy({ top: 0.6, behavior: 'auto' });
+        // Noticeably faster yet smooth auto-scroll rate (1.8px per frame)
+        window.scrollBy({ top: 1.8, behavior: 'auto' });
         lastTime = timestamp;
       }
       autoScrollRef.current = requestAnimationFrame(scrollStep);
@@ -94,10 +95,10 @@ export default function App() {
         console.log("Audio play error:", err);
       });
     }
-    // Start gentle auto scroll 1.5s after envelope opens
+    // Start auto scroll 1.2s after envelope opens
     setTimeout(() => {
       startGentleAutoScroll();
-    }, 1500);
+    }, 1200);
   };
 
   const toggleAudio = () => {

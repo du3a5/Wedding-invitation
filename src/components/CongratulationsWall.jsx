@@ -55,8 +55,8 @@ export default function CongratulationsWall({ t }) {
       } else {
         // Fallback default groom pinned message if not yet submitted in sheet
         setGroomWish({
-          name: "محمد سعد (العريس)",
-          message: "الحمد لله الذي بنعمته تتم الصالحات، أسأل الله أن يبارك لنا وأن يجمع بيننا في خير ورضا 🤍"
+          name: t.groomFallbackName,
+          message: t.groomFallbackMessage
         });
       }
 
@@ -65,7 +65,7 @@ export default function CongratulationsWall({ t }) {
       const shuffled = [...guestWishes].sort(() => 0.5 - Math.random());
       setDisplayedSubset(shuffled.slice(0, 3));
     }
-  }, [wishes]);
+  }, [wishes, t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -244,7 +244,7 @@ export default function CongratulationsWall({ t }) {
               <div className="flex items-center justify-between mb-3">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#580E18] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
                   <Crown className="w-4 h-4 fill-[#E5C158]" />
-                  <span>تهنئة العريس</span>
+                  <span>{t.groomBadge}</span>
                 </div>
                 <Heart className="w-5 h-5 text-[#580E18] fill-[#580E18]/20" />
               </div>

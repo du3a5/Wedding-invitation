@@ -57,6 +57,22 @@ body {
   font-family: 'Tajawal', sans-serif;
 }
 
+/* ROMANTIC GOLDEN BOKEH CANDLELIT KEYFRAME */
+@keyframes goldenBokehPulse {
+  0%, 100% {
+    transform: scale(0.85) translateY(0px);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.3) translateY(-18px);
+    opacity: 0.65;
+  }
+}
+
+.animate-bokeh-pulse {
+  animation: goldenBokehPulse 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 /* Luxury 3D Wax Seal Styles */
 .wax-seal-3d {
   background: radial-gradient(circle at 35% 35%, #8C1C2B 0%, #580E18 55%, #3D0910 100%);

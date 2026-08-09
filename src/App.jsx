@@ -5,6 +5,7 @@ import InvitationVerses from './components/InvitationVerses';
 import Countdown from './components/Countdown';
 import EventDetails from './components/EventDetails';
 import CongratulationsWall from './components/CongratulationsWall';
+import ShareSection from './components/ShareSection';
 import Footer from './components/Footer';
 import FloatingPetals from './components/FloatingPetals';
 import { translations } from './config/i18n';
@@ -42,8 +43,7 @@ export default function App() {
     const scrollStep = (timestamp) => {
       const delta = timestamp - lastTime;
       if (delta >= 16) {
-        // Noticeably faster yet smooth auto-scroll rate (1.8px per frame)
-        window.scrollBy({ top: 1.8, behavior: 'auto' });
+        window.scrollBy({ top: 0.85, behavior: 'auto' });
         lastTime = timestamp;
       }
       autoScrollRef.current = requestAnimationFrame(scrollStep);
@@ -53,15 +53,12 @@ export default function App() {
   };
 
   const pauseAutoScrollTemporary = () => {
-    // 1. Immediately pause ongoing scroll
     stopAutoScroll();
 
-    // 2. Clear any pending resume timer
     if (resumeTimeoutRef.current) {
       clearTimeout(resumeTimeoutRef.current);
     }
 
-    // 3. Schedule auto-scroll to resume after 4.5s of inactivity
     resumeTimeoutRef.current = setTimeout(() => {
       startGentleAutoScroll();
     }, 4500);
@@ -95,7 +92,6 @@ export default function App() {
         console.log("Audio play error:", err);
       });
     }
-    // Start auto scroll 1.2s after envelope opens
     setTimeout(() => {
       startGentleAutoScroll();
     }, 1200);
@@ -165,6 +161,9 @@ export default function App() {
 
         {/* Section 6 & 7: Unified Congratulations Wall */}
         <CongratulationsWall t={t} />
+
+        {/* Share Section */}
+        <ShareSection t={t} />
       </main>
 
       {/* Section 8: Minimal Footer */}

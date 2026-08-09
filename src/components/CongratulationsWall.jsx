@@ -37,7 +37,7 @@ export default function CongratulationsWall({ t }) {
           }
         }
       } catch (err) {
-        console.warn("Could not fetch live sheet CSV, using default wishes:", err);
+        console.warn("Could not fetch live sheet CSV:", err);
       } finally {
         setIsLoadingSheet(false);
       }
@@ -45,25 +45,27 @@ export default function CongratulationsWall({ t }) {
     fetchLiveSheetWishes();
   }, []);
 
-  // Process wishes to isolate groom's pinned message and select 3 random guest wishes
+  // Process wishes: Groom message is PERMANENTLY pinned at top; ONLY real guest wishes rotate below!
   useEffect(() => {
-    if (wishes && wishes.length > 0) {
-      // Find groom's entry if present
-      const foundGroom = wishes.find(w => isGroomEntry(w.name));
-      if (foundGroom) {
-        setGroomWish(foundGroom);
-      } else {
-        // Fallback default groom pinned message if not yet submitted in sheet
-        setGroomWish({
-          name: t.groomFallbackName,
-          message: t.groomFallbackMessage
-        });
-      }
+    // 1. Groom Message: Always pinned at top (from sheet if submitted, or official pinned text)
+    const foundGroom = wishes.find(w => isGroomEntry(w.name));
+    if (foundGroom) {
+      setGroomWish(foundGroom);
+    } else {
+      setGroomWish({
+        name: t.groomFallbackName || "محمد سعد (العريس)",
+        message: t.groomFallbackMessage || "الحمد لله الذي بنعمته تتم الصالحات، أسأل الله أن يبارك لنا وأن يجمع بيننا في خير ورضا 🤍"
+      });
+    }
 
-      // Filter out groom's entry from regular guest pool
-      const guestWishes = wishes.filter(w => !isGroomEntry(w.name));
+    // 2. Guest Pool: STRICTLY EXCLUDE any groom message from ever entering the rotating pool!
+    const guestWishes = wishes.filter(w => !isGroomEntry(w.name));
+    
+    if (guestWishes.length > 0) {
       const shuffled = [...guestWishes].sort(() => 0.5 - Math.random());
       setDisplayedSubset(shuffled.slice(0, 3));
+    } else {
+      setDisplayedSubset([]);
     }
   }, [wishes, t]);
 
@@ -120,8 +122,10 @@ export default function CongratulationsWall({ t }) {
 
   const rotateSubsets = () => {
     const guestWishes = wishes.filter(w => !isGroomEntry(w.name));
-    const shuffled = [...guestWishes].sort(() => 0.5 - Math.random());
-    setDisplayedSubset(shuffled.slice(0, 3));
+    if (guestWishes.length > 0) {
+      const shuffled = [...guestWishes].sort(() => 0.5 - Math.random());
+      setDisplayedSubset(shuffled.slice(0, 3));
+    }
   };
 
   return (
@@ -235,10 +239,10 @@ export default function CongratulationsWall({ t }) {
 
         </div>
 
-        {/* WISHES WALL: PINNED GROOM MESSAGE CARD AT TOP + 3 ROTATING GUEST WISHES */}
+        {/* WISHES WALL: PERMANENTLY PINNED GROOM MESSAGE CARD AT TOP + REAL GUEST WISHES ONLY */}
         <div className="w-full max-w-4xl mx-auto space-y-6">
           
-          {/* PINNED GROOM MESSAGE HIGHLIGHTED CARD */}
+          {/* PERMANENTLY PINNED GROOM MESSAGE CARD */}
           {groomWish && (
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden">
               <div className="flex items-center justify-between mb-3">
@@ -257,43 +261,45 @@ export default function CongratulationsWall({ t }) {
             </div>
           )}
 
-          {/* ROTATING 3 GUEST WISHES */}
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="font-thmanyah text-2xl text-[#580E18] font-bold flex items-center gap-2">
-                <span>{t.wishesHeading}</span>
-                {isLoadingSheet && (
-                  <span className="text-xs font-tajawal font-normal text-[#8C6D33] animate-pulse">(جاري التحديث...)</span>
-                )}
-              </h3>
-              <button
-                onClick={rotateSubsets}
-                title="تحديث التهاني"
-                className="p-2 rounded-full text-[#8C6D33] hover:text-[#580E18] transition-colors cursor-pointer"
-              >
-                <RefreshCw className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {displayedSubset.map((wish, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
+          {/* REAL GUEST WISHES ONLY (No fake/placeholder wishes!) */}
+          {displayedSubset.length > 0 && (
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="font-thmanyah text-2xl text-[#580E18] font-bold flex items-center gap-2">
+                  <span>{t.wishesHeading}</span>
+                  {isLoadingSheet && (
+                    <span className="text-xs font-tajawal font-normal text-[#8C6D33] animate-pulse">(جاري التحديث...)</span>
+                  )}
+                </h3>
+                <button
+                  onClick={rotateSubsets}
+                  title="تحديث التهاني"
+                  className="p-2 rounded-full text-[#8C6D33] hover:text-[#580E18] transition-colors cursor-pointer"
                 >
-                  <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
-                    "{wish.message}"
-                  </p>
-                  <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
-                    <span className="font-tajawal font-bold text-sm text-[#580E18]">
-                      {wish.name}
-                    </span>
-                    <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
+                  <RefreshCw className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {displayedSubset.map((wish, idx) => (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
+                  >
+                    <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
+                      "{wish.message}"
+                    </p>
+                    <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
+                      <span className="font-tajawal font-bold text-sm text-[#580E18]">
+                        {wish.name}
+                      </span>
+                      <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
 

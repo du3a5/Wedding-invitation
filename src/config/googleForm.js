@@ -5,13 +5,8 @@ export const GOOGLE_FORM_CONFIG = {
   sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRDtoY2STm9X8qNYeXutCfK3mh1fZ5YsrTYj_D277gKjizOAB1VGIdtksa5SmLyjZOw-V1kaQ9_Bd1/pub?output=csv"
 };
 
-export const INITIAL_WISHES = [
-  { name: "عائلة آل مختار", message: "ألف مبروك للعروسين الحبيبين، بارك الله لكما وبارك عليكما وجمع بينكما في خير 🤍" },
-  { name: "د. أحمد أنور والعائلة", message: "دامت دياركم عامرة بالأفراح والمسرات، مبارك للعروس الغالية والعريس المحترم ✨" },
-  { name: "م. كريم الشافعي", message: "أجمل التهاني والتبريكات بمناسبة زفاف نجلكم الكريم، أسعدكم الله دائمًا" },
-  { name: "عائلة الحاج محمد سعد", message: "بارك الله لكما وجمع بينكما في مودة ورحمة، ألف مبروك للعروسين 🎉" },
-  { name: "د. هدى والمستشار محمود", message: "تهانينا الحارة للشيخ سعد والأستاذ محمد أنور، فرحة تدوم بإذن الله" }
-];
+// Zero hardcoded sample/placeholder wishes. ONLY real submitted responses will be loaded from Google Sheet!
+export const INITIAL_WISHES = [];
 
 /**
  * Robust CSV parser that correctly handles quoted strings, commas, and newlines.

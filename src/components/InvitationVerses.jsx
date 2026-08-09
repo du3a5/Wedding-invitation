@@ -87,7 +87,7 @@ export default function InvitationVerses({ lang, t }) {
         {/* GOLD NAME CALLIGRAPHY IMAGES WITH "على" CONNECTOR & SUBTITLES */}
         <div className="my-12 flex items-center justify-center gap-6 sm:gap-10 flex-wrap py-2">
           
-          {/* Groom Block: Mohammed + "بن سعد" */}
+          {/* Groom Block: Mohammed + Father Caption ("بن سعد" in AR / "Saad" in EN) */}
           <div className="flex flex-col items-center">
             <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
               <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
@@ -105,7 +105,7 @@ export default function InvitationVerses({ lang, t }) {
                 )}
               </div>
             </div>
-            <span className="font-amiri text-lg sm:text-xl text-[#8C6D33] font-bold mt-2.5">
+            <span className={`text-[#8C6D33] font-bold mt-2.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
               {t.groomFather}
             </span>
           </div>
@@ -115,7 +115,7 @@ export default function InvitationVerses({ lang, t }) {
             {t.andWord}
           </span>
 
-          {/* Bride Block: Ghada + "بنت محمد" */}
+          {/* Bride Block: Ghada + Father Caption ("بنت محمد" in AR / "Mohammed" in EN) */}
           <div className="flex flex-col items-center">
             <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
               <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
@@ -133,26 +133,24 @@ export default function InvitationVerses({ lang, t }) {
                 )}
               </div>
             </div>
-            <span className="font-amiri text-lg sm:text-xl text-[#8C6D33] font-bold mt-2.5">
+            <span className={`text-[#8C6D33] font-bold mt-2.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
               {t.brideFather}
             </span>
           </div>
 
         </div>
 
-        {/* PLAIN MINIMALIST TYPOGRAPHY FOR 3-COLUMN EVENT DETAILS (NO background box, NO icons, NO colored cards) */}
+        {/* PLAIN MINIMALIST TYPOGRAPHY FOR 3-COLUMN EVENT DETAILS */}
         <div className="my-12 py-6 border-y border-[#C5A059]/35 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           
-          {/* Column 1: Date (2026 / 10 / سبتمبر) */}
+          {/* Column 1: Date */}
           <div className="flex flex-col items-center justify-center p-3 border-b md:border-b-0 md:border-l border-[#C5A059]/30">
             <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
               {t.dateLabel}
             </span>
-            <div className="flex items-baseline justify-center gap-1.5 font-amiri text-[#580E18]">
-              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">2026 /</span>
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#580E18]">10</span>
-              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">/ سبتمبر</span>
-            </div>
+            <span className="font-amiri text-xl sm:text-2xl font-bold text-[#580E18]">
+              {t.colDateMonth}
+            </span>
           </div>
 
           {/* Column 2 (Center): Venue & Location */}
@@ -165,16 +163,14 @@ export default function InvitationVerses({ lang, t }) {
             </span>
           </div>
 
-          {/* Column 3: Day & Time (الخميس / 8 / مساءً) */}
+          {/* Column 3: Day & Time (Fully Translated) */}
           <div className="flex flex-col items-center justify-center p-3">
             <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
               {t.timeLabel}
             </span>
-            <div className="flex items-baseline justify-center gap-1.5 font-amiri text-[#580E18]">
-              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">الخميس /</span>
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#580E18]">8</span>
-              <span className="text-lg sm:text-xl font-bold text-[#2D1E18]">/ مساءً</span>
-            </div>
+            <span className="font-amiri text-xl sm:text-2xl font-bold text-[#580E18]">
+              {t.colDayTime}
+            </span>
           </div>
 
         </div>

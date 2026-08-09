@@ -10,19 +10,11 @@ export default function CongratulationsWall({ t }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [wishes, setWishes] = useState(INITIAL_WISHES);
-  const [groomWish, setGroomWish] = useState(null);
   const [displayedSubset, setDisplayedSubset] = useState([]);
   const [imgError, setImgError] = useState(false);
   const [isLoadingSheet, setIsLoadingSheet] = useState(false);
 
-  // Helper to identify if a wish belongs to the groom
-  const isGroomEntry = (entryName) => {
-    if (!entryName) return false;
-    const n = entryName.toLowerCase();
-    return n.includes("محمد سعد") || n.includes("العريس") || n.includes("groom");
-  };
-
-  // Fetch live published Google Sheet CSV data on mount
+  // Fetch live published Google Sheet CSV data on mount (All rows are guest wishes)
   useEffect(() => {
     async function fetchLiveSheetWishes() {
       if (!GOOGLE_FORM_CONFIG.sheetCsvUrl) return;
@@ -37,7 +29,7 @@ export default function CongratulationsWall({ t }) {
           }
         }
       } catch {
-        // Silent catch for guest data privacy (no console logging)
+        // Silent catch for guest data privacy
       } finally {
         setIsLoadingSheet(false);
       }
@@ -45,29 +37,15 @@ export default function CongratulationsWall({ t }) {
     fetchLiveSheetWishes();
   }, []);
 
-  // Process wishes: Groom message is PERMANENTLY pinned at top; ONLY real guest wishes rotate below!
+  // Rotate 3 random real guest wishes from the Google Sheet
   useEffect(() => {
-    // 1. Groom Message: Always pinned at top (from sheet if submitted, or official pinned text)
-    const foundGroom = wishes.find(w => isGroomEntry(w.name));
-    if (foundGroom) {
-      setGroomWish(foundGroom);
-    } else {
-      setGroomWish({
-        name: t.groomFallbackName || "محمد سعد (العريس)",
-        message: t.groomFallbackMessage || "الحمد لله الذي بنعمته تتم الصالحات، أسأل الله أن يبارك لنا وأن يجمع بيننا في خير ورضا 🤍"
-      });
-    }
-
-    // 2. Guest Pool: STRICTLY EXCLUDE any groom message from ever entering the rotating pool!
-    const guestWishes = wishes.filter(w => !isGroomEntry(w.name));
-    
-    if (guestWishes.length > 0) {
-      const shuffled = [...guestWishes].sort(() => 0.5 - Math.random());
+    if (wishes.length > 0) {
+      const shuffled = [...wishes].sort(() => 0.5 - Math.random());
       setDisplayedSubset(shuffled.slice(0, 3));
     } else {
       setDisplayedSubset([]);
     }
-  }, [wishes, t]);
+  }, [wishes]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,12 +76,8 @@ export default function CongratulationsWall({ t }) {
       });
 
       const newWish = { name: name.trim(), message: message.trim() };
-      if (isGroomEntry(name)) {
-        setGroomWish(newWish);
-      } else {
-        setWishes(prev => [newWish, ...prev]);
-        setDisplayedSubset(prev => [newWish, ...prev.slice(0, 2)]);
-      }
+      setWishes(prev => [newWish, ...prev]);
+      setDisplayedSubset(prev => [newWish, ...prev.slice(0, 2)]);
       
       setIsSubmitted(true);
     } catch {
@@ -120,9 +94,8 @@ export default function CongratulationsWall({ t }) {
   };
 
   const rotateSubsets = () => {
-    const guestWishes = wishes.filter(w => !isGroomEntry(w.name));
-    if (guestWishes.length > 0) {
-      const shuffled = [...guestWishes].sort(() => 0.5 - Math.random());
+    if (wishes.length > 0) {
+      const shuffled = [...wishes].sort(() => 0.5 - Math.random());
       setDisplayedSubset(shuffled.slice(0, 3));
     }
   };
@@ -238,69 +211,93 @@ export default function CongratulationsWall({ t }) {
 
         </div>
 
-        {/* WISHES WALL: PERMANENTLY PINNED GROOM MESSAGE CARD AT TOP + REAL GUEST WISHES ONLY */}
-        <div className="w-full max-w-4xl mx-auto space-y-6">
+        {/* PINNED MESSAGES SECTION: HARD-CODED GROOM & BRIDE CARDS */}
+        <div className="w-full max-w-4xl mx-auto space-y-6 mb-12">
           
-          {/* PERMANENTLY PINNED GROOM MESSAGE CARD */}
-          {groomWish && (
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden">
-              <div className="flex items-center justify-between mb-3">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#580E18] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
-                  <Crown className="w-4 h-4 fill-[#E5C158]" />
-                  <span>{t.groomBadge}</span>
-                </div>
-                <Heart className="w-5 h-5 text-[#580E18] fill-[#580E18]/20" />
-              </div>
-              <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-3">
-                "{groomWish.message}"
-              </p>
-              <div className="text-left font-tajawal font-bold text-sm text-[#8C6D33]">
-                — {groomWish.name}
-              </div>
-            </div>
-          )}
-
-          {/* REAL GUEST WISHES ONLY (No fake/placeholder wishes!) */}
-          {displayedSubset.length > 0 && (
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-thmanyah text-2xl text-[#580E18] font-bold flex items-center gap-2">
-                  <span>{t.wishesHeading}</span>
-                  {isLoadingSheet && (
-                    <span className="text-xs font-tajawal font-normal text-[#8C6D33] animate-pulse">(جاري التحديث...)</span>
-                  )}
-                </h3>
-                <button
-                  onClick={rotateSubsets}
-                  title="تحديث التهاني"
-                  className="p-2 rounded-full text-[#8C6D33] hover:text-[#580E18] transition-colors cursor-pointer"
-                >
-                  <RefreshCw className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {displayedSubset.map((wish, idx) => (
-                  <div
-                    key={idx}
-                    className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
-                  >
-                    <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
-                      "{wish.message}"
-                    </p>
-                    <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
-                      <span className="font-tajawal font-bold text-sm text-[#580E18]">
-                        {wish.name}
-                      </span>
-                      <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
-                    </div>
+          {/* GRID: GROOM & BRIDE PINNED CARDS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* 1. PERMANENTLY PINNED GROOM MESSAGE CARD */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#580E18] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
+                    <Crown className="w-4 h-4 fill-[#E5C158]" />
+                    <span>{t.groomBadge}</span>
                   </div>
-                ))}
+                  <Heart className="w-5 h-5 text-[#580E18] fill-[#580E18]/20" />
+                </div>
+                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4">
+                  "{t.groomMessage}"
+                </p>
+              </div>
+              <div className="text-left font-tajawal font-bold text-sm text-[#8C6D33] pt-3 border-t border-[#C5A059]/30">
+                — {t.groomNameSignature}
               </div>
             </div>
-          )}
+
+            {/* 2. PERMANENTLY PINNED BRIDE MESSAGE CARD (MATCHING CROWN ICON) */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7A1F2B] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
+                    <Crown className="w-4 h-4 fill-[#E5C158]" />
+                    <span>{t.brideBadge}</span>
+                  </div>
+                  <Heart className="w-5 h-5 text-[#7A1F2B] fill-[#7A1F2B]/20" />
+                </div>
+                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4">
+                  "{t.brideMessage}"
+                </p>
+              </div>
+              <div className="text-left font-tajawal font-bold text-sm text-[#8C6D33] pt-3 border-t border-[#C5A059]/30">
+                — {t.brideNameSignature}
+              </div>
+            </div>
+
+          </div>
 
         </div>
+
+        {/* REAL GUEST WISHES ONLY (Pulled live from Google Sheet CSV, zero sample placeholders) */}
+        {displayedSubset.length > 0 && (
+          <div className="w-full max-w-4xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-thmanyah text-2xl text-[#580E18] font-bold flex items-center gap-2">
+                <span>{t.wishesHeading}</span>
+                {isLoadingSheet && (
+                  <span className="text-xs font-tajawal font-normal text-[#8C6D33] animate-pulse">(جاري التحديث...)</span>
+                )}
+              </h3>
+              <button
+                onClick={rotateSubsets}
+                title="تحديث التهاني"
+                className="p-2 rounded-full text-[#8C6D33] hover:text-[#580E18] transition-colors cursor-pointer"
+              >
+                <RefreshCw className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {displayedSubset.map((wish, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
+                >
+                  <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
+                    "{wish.message}"
+                  </p>
+                  <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
+                    <span className="font-tajawal font-bold text-sm text-[#580E18]">
+                      {wish.name}
+                    </span>
+                    <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       </ScrollReveal>
     </section>

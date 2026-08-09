@@ -2,26 +2,26 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
-export default function HeroVideo({ isAudioMuted, toggleAudio, t }) {
+export default function HeroVideo({ isEnvelopeOpened, isAudioMuted, toggleAudio, t }) {
   const videoRef = useRef(null);
   const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
-    if (videoRef.current) {
+    if (isEnvelopeOpened && videoRef.current) {
       videoRef.current.play().catch(() => {
         setVideoError(false);
       });
     }
-  }, []);
+  }, [isEnvelopeOpened]);
 
   return (
     <section className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#1F120E]">
-      {/* Background Hero Video */}
+      {/* Background Hero Video with Mobile Lazy Loading */}
       {!videoError ? (
         <video
           ref={videoRef}
           src="assets/video/hero-video.mp4"
-          autoPlay
+          preload={isEnvelopeOpened ? "auto" : "none"}
           muted
           loop
           playsInline

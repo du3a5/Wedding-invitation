@@ -46,11 +46,21 @@ body {
 
 /* HYBRID TYPOGRAPHY SYSTEM */
 .font-thmanyah {
-  font-family: 'Thmanyah', 'Amiri', serif;
+  font-family: 'Thmanyah', 'Noto Naskh Arabic', serif;
 }
 
+/* Primary Body & Verse Font: Currently set to "Noto Naskh Arabic" for live preview */
 .font-amiri {
-  font-family: 'Amiri', serif;
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+}
+
+.font-noto-naskh {
+  font-family: 'Noto Naskh Arabic', serif;
+}
+
+/* Alternative Font: "IBM Plex Sans Arabic" for quick side-by-side comparison */
+.font-ibm-plex {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
 }
 
 .font-tajawal {

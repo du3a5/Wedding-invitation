@@ -88,8 +88,8 @@ export default function App() {
     if (audioRef.current && isAudioMuted) {
       audioRef.current.play().then(() => {
         setIsAudioMuted(false);
-      }).catch((err) => {
-        console.log("Audio play error:", err);
+      }).catch(() => {
+        // Silent catch for browser autoplay policies
       });
     }
     setTimeout(() => {
@@ -102,8 +102,8 @@ export default function App() {
     if (isAudioMuted) {
       audioRef.current.play().then(() => {
         setIsAudioMuted(false);
-      }).catch((err) => {
-        console.log("Audio toggle play error:", err);
+      }).catch(() => {
+        // Silent catch
       });
     } else {
       audioRef.current.pause();
@@ -114,8 +114,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FAF6F0] text-[#2D1E18] selection:bg-[#580E18] selection:text-[#FAF6F0] relative">
       
-      {/* Background Audio Element */}
-      <audio ref={audioRef} src="assets/audio/nasheed.mp3" loop />
+      {/* Background Audio Element - Lazy loaded until envelope opening */}
+      <audio 
+        ref={audioRef} 
+        src="assets/audio/nasheed.mp3" 
+        preload={isEnvelopeOpened ? "auto" : "none"} 
+        loop 
+      />
 
       {/* Floating Rose Petals Background Motion */}
       <FloatingPetals />
@@ -143,8 +148,9 @@ export default function App() {
 
       {/* Main Website Content */}
       <main className={`transition-opacity duration-1000 ${isEnvelopeOpened ? 'opacity-100' : 'opacity-90'}`}>
-        {/* Section 2: Hero Video */}
+        {/* Section 2: Hero Video (Lazy-loaded) */}
         <HeroVideo 
+          isEnvelopeOpened={isEnvelopeOpened}
           isAudioMuted={isAudioMuted} 
           toggleAudio={toggleAudio} 
           t={t} 

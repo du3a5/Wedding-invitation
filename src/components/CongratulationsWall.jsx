@@ -36,8 +36,8 @@ export default function CongratulationsWall({ t }) {
             setWishes(parsed);
           }
         }
-      } catch (err) {
-        console.warn("Could not fetch live sheet CSV:", err);
+      } catch {
+        // Silent catch for guest data privacy (no console logging)
       } finally {
         setIsLoadingSheet(false);
       }
@@ -106,8 +106,7 @@ export default function CongratulationsWall({ t }) {
       }
       
       setIsSubmitted(true);
-    } catch (err) {
-      console.error("Error submitting form:", err);
+    } catch {
       setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);

@@ -64,18 +64,18 @@ export default function ShareSection({ t }) {
             <span>{t.shareWhatsappBtn}</span>
           </button>
 
-          {/* Button 2: Copy Link with Toast Confirmation (Burgundy Gradient Style) */}
+          {/* Button 2: Copy Link with Luxury Gold Confirmation Tone */}
           <button
             onClick={handleCopyLink}
             className={`flex-1 min-w-[160px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-tajawal font-bold text-sm shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer ${
               copied 
-                ? 'bg-[#10B981] text-white border-2 border-[#10B981]' 
+                ? 'bg-gradient-to-r from-[#C5A059] via-[#E5C158] to-[#9B793A] text-[#3F080F] border-2 border-[#E5C158]' 
                 : 'bg-gradient-to-r from-[#580E18] via-[#7A1F2B] to-[#3F080F] text-[#FAF6F0] hover:from-[#6B1420]'
             }`}
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 text-white" />
+                <Check className="w-4 h-4 text-[#3F080F]" />
                 <span>{t.linkCopiedText}</span>
               </>
             ) : (

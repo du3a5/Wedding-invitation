@@ -44,12 +44,26 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ELEGANT ENGLISH MODE TYPOGRAPHY PAIRING: CORMORANT GARAMOND + JOST */
+html[lang="en"] body,
+html[lang="en"] .font-tajawal {
+  font-family: 'Jost', sans-serif;
+}
+
+html[lang="en"] h1,
+html[lang="en"] h2,
+html[lang="en"] h3,
+html[lang="en"] .font-thmanyah,
+html[lang="en"] .font-cairo {
+  font-family: 'Cormorant Garamond', serif;
+}
+
 /* HYBRID TYPOGRAPHY SYSTEM */
 .font-thmanyah {
   font-family: 'Thmanyah', 'Noto Naskh Arabic', serif;
 }
 
-/* Primary Body & Verse Font: Currently set to "Noto Naskh Arabic" for live preview */
+/* Primary Body & Verse Font: Noto Naskh Arabic */
 .font-amiri {
   font-family: 'Noto Naskh Arabic', 'Amiri', serif;
 }
@@ -58,7 +72,7 @@ body {
   font-family: 'Noto Naskh Arabic', serif;
 }
 
-/* Alternative Font: "IBM Plex Sans Arabic" for quick side-by-side comparison */
+/* Alternative Font: IBM Plex Sans Arabic */
 .font-ibm-plex {
   font-family: 'IBM Plex Sans Arabic', sans-serif;
 }

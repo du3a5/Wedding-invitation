@@ -12,6 +12,7 @@ export default function CongratulationsWall({ t }) {
   const [wishes, setWishes] = useState(INITIAL_WISHES);
   const [displayedSubset, setDisplayedSubset] = useState([]);
   const [imgError, setImgError] = useState(false);
+  const [brideImgError, setBrideImgError] = useState(false);
   const [isLoadingSheet, setIsLoadingSheet] = useState(false);
 
   // Fetch live published Google Sheet CSV data on mount (All rows are guest wishes)
@@ -215,13 +216,13 @@ export default function CongratulationsWall({ t }) {
         <div className="w-full max-w-4xl mx-auto space-y-6 mb-12">
           
           {/* GRID: GROOM & BRIDE PINNED CARDS */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             
             {/* 1. PERMANENTLY PINNED GROOM MESSAGE CARD */}
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#580E18] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#580E18] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
                     <Crown className="w-4 h-4 fill-[#E5C158]" />
                     <span>{t.groomBadge}</span>
                   </div>
@@ -236,20 +237,40 @@ export default function CongratulationsWall({ t }) {
               </div>
             </div>
 
-            {/* 2. PERMANENTLY PINNED BRIDE MESSAGE CARD (MATCHING CROWN ICON) */}
+            {/* 2. PERMANENTLY PINNED BRIDE CARD (INVERTED COLORS + FRAMED PHOTO) */}
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7A1F2B] text-[#E5C158] font-tajawal text-xs font-bold shadow-sm">
-                    <Crown className="w-4 h-4 fill-[#E5C158]" />
+                  {/* INVERTED BADGE: GOLD BACKGROUND + BURGUNDY TEXT & CROWN */}
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#E5C158] via-[#C5A059] to-[#9B793A] text-[#3F080F] border border-[#E5C158] font-tajawal text-xs font-extrabold shadow-sm">
+                    <Crown className="w-4 h-4 fill-[#3F080F] text-[#3F080F]" />
                     <span>{t.brideBadge}</span>
                   </div>
-                  <Heart className="w-5 h-5 text-[#7A1F2B] fill-[#7A1F2B]/20" />
+                  <Heart className="w-5 h-5 text-[#C5A059] fill-[#C5A059]/30" />
                 </div>
-                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4">
-                  "{t.brideMessage}"
-                </p>
+
+                {/* ELEGANT FRAMED BRIDE CARD PHOTO */}
+                <div className="w-full h-[210px] sm:h-[240px] rounded-2xl overflow-hidden border border-[#C5A059]/40 mb-4 bg-[#FAF6F0] flex items-center justify-center shadow-inner">
+                  {!brideImgError ? (
+                    <img
+                      src="assets/images/couple/bride-card-photo.jpeg"
+                      alt="العروس"
+                      onError={() => {
+                        // Fallback to .png if .jpeg fails
+                        setBrideImgError(true);
+                      }}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                    />
+                  ) : (
+                    <img
+                      src="assets/images/couple/bride-card-photo.png"
+                      alt="العروس"
+                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                    />
+                  )}
+                </div>
               </div>
+
               <div className="text-left font-tajawal font-bold text-sm text-[#8C6D33] pt-3 border-t border-[#C5A059]/30">
                 — {t.brideNameSignature}
               </div>
@@ -259,7 +280,7 @@ export default function CongratulationsWall({ t }) {
 
         </div>
 
-        {/* REAL GUEST WISHES ONLY (Pulled live from Google Sheet CSV, zero sample placeholders) */}
+        {/* REAL GUEST WISHES ONLY (Pulled live from Google Sheet CSV) */}
         {displayedSubset.length > 0 && (
           <div className="w-full max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-6">

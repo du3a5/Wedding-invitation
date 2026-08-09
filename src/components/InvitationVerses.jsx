@@ -67,7 +67,7 @@ export default function InvitationVerses({ lang, t }) {
           <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-[#C5A059]"></div>
         </div>
 
-        {/* Welcoming Hosts Callout (Amiri Font) */}
+        {/* Welcoming Hosts Callout (Plain undiacritized line: بقلوب تفيض بالمحبة، وتتسع لفرحة اللقاء، يتشرف كل من) */}
         <div className={`font-amiri text-xl sm:text-2xl text-[#4A0D16] leading-[2.2] mb-10 ${isEn ? 'font-tajawal font-medium' : ''}`}>
           {isEn ? (
             <p>
@@ -75,7 +75,7 @@ export default function InvitationVerses({ lang, t }) {
             </p>
           ) : (
             <p>
-              بِقُلُوبٍ تَفِيضُ بِالمَحَبَّةِ، وَتَتَّسِعُ لِفَرَحَةِ اللَّقَاءِ، يتشرف كلُّ من:
+              بقلوب تفيض بالمحبة، وتتسع لفرحة اللقاء، يتشرف كل من:
               <br />
               <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">الشيخ/ سعد مختار</span> و <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">الرائد/ محمد أنور</span>
               <br />
@@ -84,16 +84,16 @@ export default function InvitationVerses({ lang, t }) {
           )}
         </div>
 
-        {/* GOLD NAME CALLIGRAPHY IMAGES WITH "على" CONNECTOR & SUBTITLES */}
+        {/* GOLD NAME CALLIGRAPHY IMAGES WITH ENGLISH ALTERNATES & "على" CONNECTOR */}
         <div className="my-12 flex items-center justify-center gap-6 sm:gap-10 flex-wrap py-2">
           
-          {/* Groom Block: Mohammed + Father Caption ("بن سعد" in AR / "Saad" in EN) */}
+          {/* Groom Block: Mohammed */}
           <div className="flex flex-col items-center">
             <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
               <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
                 {!mohammedImgError ? (
                   <img
-                    src="assets/images/names/name-mohammed.png?v=3"
+                    src={isEn ? "assets/images/names/name-Moh-Eng.png" : "assets/images/names/name-mohammed.png?v=3"}
                     alt="محمد"
                     onError={() => setMohammedImgError(true)}
                     className="h-full object-contain max-w-[180px] sm:max-w-[240px] filter drop-shadow-sm"
@@ -115,13 +115,13 @@ export default function InvitationVerses({ lang, t }) {
             {t.andWord}
           </span>
 
-          {/* Bride Block: Ghada + Father Caption ("بنت محمد" in AR / "Mohammed" in EN) */}
+          {/* Bride Block: Ghada */}
           <div className="flex flex-col items-center">
             <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
               <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
                 {!ghadaImgError ? (
                   <img
-                    src="assets/images/names/name-ghada.png?v=3"
+                    src={isEn ? "assets/images/names/name-Ghada-Eng.png" : "assets/images/names/name-ghada.png?v=3"}
                     alt="غادة"
                     onError={() => setGhadaImgError(true)}
                     className="h-full object-contain max-w-[180px] sm:max-w-[240px] filter drop-shadow-sm"
@@ -163,7 +163,7 @@ export default function InvitationVerses({ lang, t }) {
             </span>
           </div>
 
-          {/* Column 3: Day & Time (Fully Translated) */}
+          {/* Column 3: Day & Time */}
           <div className="flex flex-col items-center justify-center p-3">
             <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
               {t.timeLabel}
@@ -175,10 +175,10 @@ export default function InvitationVerses({ lang, t }) {
 
         </div>
 
-        {/* Modesty & Blessing Note (Amiri Font) */}
+        {/* Modesty & Blessing Note (Quotation marks removed per user request) */}
         <div className={`font-amiri text-xl sm:text-2xl text-[#2D1E18] leading-[2.2] space-y-6 ${isEn ? 'font-tajawal' : ''}`}>
-          <div className="p-5 sm:p-6 rounded-2xl bg-[#FFFDF9] border-r-4 border-[#580E18] my-8 italic text-lg sm:text-xl text-[#580E18] shadow-xs">
-            "{t.modestyNote}"
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FFFDF9] border-r-4 border-[#580E18] my-8 font-medium text-lg sm:text-xl text-[#580E18] shadow-xs">
+            {t.modestyNote}
           </div>
 
           <p className="text-lg sm:text-xl text-[#580E18] font-bold pt-2 tracking-wide">

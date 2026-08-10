@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GOOGLE_FORM_CONFIG, INITIAL_WISHES, parseGoogleSheetCsv } from '../config/googleForm';
-import { Heart, Send, Sparkles, RefreshCw, Crown } from 'lucide-react';
+import { Heart, Send, Sparkles, RefreshCw, Crown, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import ScrollReveal from './ScrollReveal';
 
@@ -13,6 +13,7 @@ export default function CongratulationsWall({ t }) {
   const [displayedSubset, setDisplayedSubset] = useState([]);
   const [imgError, setImgError] = useState(false);
   const [isLoadingSheet, setIsLoadingSheet] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch live published Google Sheet CSV data on mount (All rows are guest wishes)
   useEffect(() => {
@@ -36,6 +37,18 @@ export default function CongratulationsWall({ t }) {
     }
     fetchLiveSheetWishes();
   }, []);
+
+  // Lock body scroll when all-wishes modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
 
   // Rotate 3 random real guest wishes from the Google Sheet
   useEffect(() => {
@@ -299,10 +312,98 @@ export default function CongratulationsWall({ t }) {
                 </div>
               ))}
             </div>
+
+            {/* NEW FEATURE: ELEGANT "VIEW ALL WISHES" BUTTON BELOW THE 3 WISH CARDS */}
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FFFDF9] border border-[#C5A059]/60 text-[#580E18] font-tajawal font-bold text-sm shadow-sm hover:bg-[#FAF6F0] hover:border-[#C5A059] transition-all duration-300 transform active:scale-95 cursor-pointer"
+              >
+                <span>{t.viewAllWishesBtn}</span>
+                {wishes.length > 0 && (
+                  <span className="px-2 py-0.5 text-xs rounded-full bg-[#580E18]/10 text-[#580E18] font-tajawal font-bold">
+                    {wishes.length}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         )}
 
       </ScrollReveal>
+
+      {/* ALL WISHES ELEGANT OVERLAY MODAL */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/65 backdrop-blur-sm animate-fade-in"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="relative max-w-4xl w-full bg-[#FFFDF9] border-2 border-[#C5A059]/50 rounded-3xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col transform transition-all duration-300 scale-100"
+            onClick={(e) => e.stopPropagation()}
+            dir={t.switchLang === 'English' ? 'rtl' : 'ltr'}
+          >
+            {/* Modal Header */}
+            <div className="p-6 sm:px-8 sm:py-6 border-b border-[#C5A059]/30 flex items-center justify-between bg-gradient-to-r from-[#FFFDF9] via-[#FAF6F0] to-[#FFFDF9]">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#580E18]/10 text-[#580E18] flex items-center justify-center">
+                  <Heart className="w-5 h-5 fill-[#580E18]" />
+                </div>
+                <div>
+                  <h3 className="font-thmanyah text-xl sm:text-2xl text-[#580E18] font-bold">
+                    {t.allWishesModalTitle}
+                  </h3>
+                  {wishes.length > 0 && (
+                    <span className="font-tajawal text-xs text-[#8C6D33] font-bold">
+                      ({wishes.length} {t.wishesHeading})
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                aria-label={t.closeModal}
+                className="p-2 rounded-full text-[#580E18] hover:bg-[#580E18]/10 transition-colors cursor-pointer"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Body: Scrollable list of ALL real guest wishes */}
+            <div className="p-6 sm:p-8 overflow-y-auto flex-1 space-y-4">
+              {wishes.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {wishes.map((wish, idx) => (
+                    <div
+                      key={idx}
+                      className="p-6 rounded-2xl bg-[#FAF6F0] border border-[#C5A059]/35 shadow-sm flex flex-col justify-between hover:shadow-md transition-all"
+                    >
+                      <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
+                        "{wish.message}"
+                      </p>
+                      <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
+                        <span className="font-tajawal font-bold text-sm text-[#580E18]">
+                          {wish.name}
+                        </span>
+                        <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <p className="font-tajawal text-base text-[#8C6D33] font-bold">
+                    لا توجد تهانٍ من الضيوف بعد.
+                  </p>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+      )}
     </section>
   );
 }

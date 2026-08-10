@@ -84,11 +84,14 @@ export default function InvitationVerses({ lang, t }) {
           )}
         </div>
 
-        {/* GOLD NAME CALLIGRAPHY IMAGES WITH ENGLISH ALTERNATES & "على" CONNECTOR */}
+        {/* GOLD NAME CALLIGRAPHY IMAGES WITH TITLES ABOVE ("المهندس" / "Eng." & "السيدة" / "Mrs.") */}
         <div className="my-12 flex items-center justify-center gap-6 sm:gap-10 flex-wrap py-2">
           
-          {/* Groom Block: Mohammed */}
+          {/* Groom Block: "المهندس" / "Eng." + Mohammed + "بن سعد" / "Saad" */}
           <div className="flex flex-col items-center">
+            <span className={`text-[#580E18] font-bold mb-1.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
+              {t.groomTitle}
+            </span>
             <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
               <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
                 {!mohammedImgError ? (
@@ -115,8 +118,11 @@ export default function InvitationVerses({ lang, t }) {
             {t.andWord}
           </span>
 
-          {/* Bride Block: Ghada */}
+          {/* Bride Block: "السيدة" / "Mrs." + Ghada + "بنت محمد" / "Mohammed" */}
           <div className="flex flex-col items-center">
+            <span className={`text-[#580E18] font-bold mb-1.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
+              {t.brideTitle}
+            </span>
             <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
               <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
                 {!ghadaImgError ? (
@@ -175,7 +181,7 @@ export default function InvitationVerses({ lang, t }) {
 
         </div>
 
-        {/* Modesty & Blessing Note (Quotation marks removed per user request) */}
+        {/* Modesty & Blessing Note */}
         <div className={`font-amiri text-xl sm:text-2xl text-[#2D1E18] leading-[2.2] space-y-6 ${isEn ? 'font-tajawal' : ''}`}>
           <div className="p-5 sm:p-6 rounded-2xl bg-[#FFFDF9] border-r-4 border-[#580E18] my-8 font-medium text-lg sm:text-xl text-[#580E18] shadow-xs">
             {t.modestyNote}

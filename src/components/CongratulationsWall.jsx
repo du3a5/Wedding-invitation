@@ -12,7 +12,6 @@ export default function CongratulationsWall({ t }) {
   const [wishes, setWishes] = useState(INITIAL_WISHES);
   const [displayedSubset, setDisplayedSubset] = useState([]);
   const [imgError, setImgError] = useState(false);
-  const [brideImgError, setBrideImgError] = useState(false);
   const [isLoadingSheet, setIsLoadingSheet] = useState(false);
 
   // Fetch live published Google Sheet CSV data on mount (All rows are guest wishes)
@@ -237,7 +236,7 @@ export default function CongratulationsWall({ t }) {
               </div>
             </div>
 
-            {/* 2. PERMANENTLY PINNED BRIDE CARD (INVERTED COLORS + FRAMED PHOTO) */}
+            {/* 2. PERMANENTLY PINNED BRIDE CARD (INVERTED GOLD BADGE + OFFICIAL TEXT MESSAGE) */}
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF9] to-[#F7ECE9] border-2 border-[#C5A059] shadow-xl relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -249,26 +248,9 @@ export default function CongratulationsWall({ t }) {
                   <Heart className="w-5 h-5 text-[#C5A059] fill-[#C5A059]/30" />
                 </div>
 
-                {/* ELEGANT FRAMED BRIDE CARD PHOTO */}
-                <div className="w-full h-[210px] sm:h-[240px] rounded-2xl overflow-hidden border border-[#C5A059]/40 mb-4 bg-[#FAF6F0] flex items-center justify-center shadow-inner">
-                  {!brideImgError ? (
-                    <img
-                      src="assets/images/couple/bride-card-photo.jpeg"
-                      alt="العروس"
-                      onError={() => {
-                        // Fallback to .png if .jpeg fails
-                        setBrideImgError(true);
-                      }}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                    />
-                  ) : (
-                    <img
-                      src="assets/images/couple/bride-card-photo.png"
-                      alt="العروس"
-                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                    />
-                  )}
-                </div>
+                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4">
+                  "{t.brideMessage}"
+                </p>
               </div>
 
               <div className="text-left font-tajawal font-bold text-sm text-[#8C6D33] pt-3 border-t border-[#C5A059]/30">

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, Clock, ExternalLink, Copy, Check } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 export default function EventDetails({ t }) {
   const [logoError, setLogoError] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
     'زفاف محمد وغادة | Wedding of Mohammed & Ghada'
@@ -15,10 +16,42 @@ export default function EventDetails({ t }) {
 
   const mapEmbedUrl = "https://maps.google.com/maps?q=%D8%A7%D9%84%D9%82%D9%86%D8%A7%D8%B7%D8%B1+%D8%A7%D9%84%D8%AE%D9%8A%D8%B1%D9%8A%D8%A9+%D8%A8%D8%AC%D9%88%D8%A7%D8%B1+%D8%B1%D9%86%D9%8A%D9%86+,+Al+Qanatir+al+Khayriyah,+Egypt&hl=ar&output=embed";
 
+  const handleCopyEventDetails = () => {
+    const isEn = t.switchLang === 'العربية';
+    const textToCopy = isEn
+      ? `Mohammed & Ghada\nEvent Details\n\nAl-Akaber Palace — Fayrouz Hall\nAl Qanatir Al Khayriyah — Next to Raneen\n\nThursday\n10 September 2026\n\n8 PM\nImmediately after Isha Prayer`
+      : `محمد وغادة\nتفاصيل الحفل\n\nقصر الأكابر — قاعة الفيروز\nبالقناطر الخيرية - بجوار رنين\n\nالخميس\n١٠ سبتمبر ٢٠٢٦\n\n٨ مساءً\nبعد صلاة العشاء مباشرة`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2200);
+      }).catch(() => {
+        // Fallback
+      });
+    } else {
+      const input = document.createElement('textarea');
+      input.value = textToCopy;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    }
+  };
+
   return (
     <section className="w-full py-16 px-4 sm:px-8 md:px-16 bg-[#FAF6F0] flex flex-col items-center justify-center">
       <ScrollReveal className="max-w-4xl w-full mx-auto space-y-8">
         
+        {/* RESTORED SECTION HEADING: تفاصيل الحفل / Event Details */}
+        <div className="text-center mb-6">
+          <h2 className="font-thmanyah text-3xl sm:text-4xl md:text-5xl text-[#580E18] font-bold tracking-wide">
+            {t.eventDetailsTitle}
+          </h2>
+        </div>
+
         {/* COMPACT UNIFIED EVENT DETAILS CARD SPLIT BY THIN DIVIDERS */}
         <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           
@@ -101,13 +134,13 @@ export default function EventDetails({ t }) {
           ></iframe>
         </div>
 
-        {/* Action Buttons Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Action Buttons Bar (Calendar, Open Map, and Copy Details) */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 flex-wrap">
           <a
             href={googleCalendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#580E18] via-[#7A1F2B] to-[#3F080F] text-[#FAF6F0] font-tajawal font-bold text-sm shadow-xl hover:shadow-2xl transition-all duration-300 transform active:scale-98 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-[#580E18] via-[#7A1F2B] to-[#3F080F] text-[#FAF6F0] font-tajawal font-bold text-sm shadow-xl hover:shadow-2xl transition-all duration-300 transform active:scale-98 cursor-pointer"
           >
             <Calendar className="w-4 h-4 text-[#E5C158]" />
             <span>{t.addToCalendar}</span>
@@ -117,11 +150,33 @@ export default function EventDetails({ t }) {
             href={mapDirectUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059] text-[#580E18] font-tajawal font-bold text-sm shadow-md hover:bg-[#FAF6F0] transition-all duration-300 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-[#FFFDF9] border border-[#C5A059] text-[#580E18] font-tajawal font-bold text-sm shadow-md hover:bg-[#FAF6F0] transition-all duration-300 cursor-pointer"
           >
             <ExternalLink className="w-4 h-4" />
             <span>{t.openMap}</span>
           </a>
+
+          {/* ELEGANT SUBTLE COPY EVENT DETAILS BUTTON */}
+          <button
+            onClick={handleCopyEventDetails}
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-tajawal font-bold text-sm shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer ${
+              copied
+                ? 'bg-gradient-to-r from-[#C5A059] via-[#E5C158] to-[#9B793A] text-[#3F080F] border border-[#E5C158]'
+                : 'bg-[#FFFDF9] border border-[#C5A059]/60 text-[#580E18] hover:bg-[#FAF6F0]'
+            }`}
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-[#3F080F]" />
+                <span>{t.eventDetailsCopied}</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4 text-[#C5A059]" />
+                <span>{t.copyEventDetailsBtn}</span>
+              </>
+            )}
+          </button>
         </div>
 
       </ScrollReveal>

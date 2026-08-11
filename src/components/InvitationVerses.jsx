@@ -32,7 +32,7 @@ export default function InvitationVerses({ lang, t }) {
           {t.bismillah}
         </div>
 
-        {/* ARABIC POETRY STANZA: AMIRI FONT FOR LITERARY POETRY WITH PERFECT HEMISTICH ALIGNMENT */}
+        {/* ARABIC POETRY STANZA: ALWAYS REMAINS IN ARABIC IN BOTH MODES */}
         <div 
           dir="rtl"
           className="font-amiri text-xl sm:text-2xl md:text-3xl text-[#580E18] font-bold space-y-6 my-10 max-w-3xl mx-auto"
@@ -67,11 +67,11 @@ export default function InvitationVerses({ lang, t }) {
           <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-[#C5A059]"></div>
         </div>
 
-        {/* Welcoming Hosts Callout (Plain undiacritized line: بقلوب تفيض بالمحبة، وتتسع لفرحة اللقاء، يتشرف كل من) */}
+        {/* Welcoming Hosts Callout */}
         <div className={`font-amiri text-xl sm:text-2xl text-[#4A0D16] leading-[2.2] mb-10 ${isEn ? 'font-tajawal font-medium' : ''}`}>
           {isEn ? (
-            <p>
-              With hearts full of love and joy, <span className="font-bold text-[#580E18]">{t.hostSaad}</span> & <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> cordially invite you to celebrate the wedding of their children
+            <p className="max-w-2xl mx-auto">
+              With hearts overflowing with love and embracing the joy of gathering together, <span className="font-bold text-[#580E18]">{t.hostSaad}</span> and <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> cordially invite you to celebrate the wedding of their children.
             </p>
           ) : (
             <p>
@@ -84,62 +84,62 @@ export default function InvitationVerses({ lang, t }) {
           )}
         </div>
 
-        {/* GOLD NAME CALLIGRAPHY IMAGES WITH TITLES ABOVE ("المهندس" / "Eng." & "السيدة" / "Mrs.") */}
-        <div className="my-12 flex items-center justify-center gap-6 sm:gap-10 flex-wrap py-2">
+        {/* GOLD NAME CALLIGRAPHY IMAGES — ALWAYS STRICTLY SIDE-BY-SIDE IN BOTH ARABIC & ENGLISH MODES */}
+        <div className="my-12 flex flex-row items-center justify-center gap-3 sm:gap-8 md:gap-10 py-2">
           
-          {/* Groom Block: "المهندس" / "Eng." + Mohammed + "بن سعد" / "Saad" */}
+          {/* Groom Block: Mohammed */}
           <div className="flex flex-col items-center">
-            <span className={`text-[#580E18] font-bold mb-1.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
+            <span className={`text-[#580E18] font-bold mb-1.5 ${isEn ? 'font-tajawal text-xs sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
               {t.groomTitle}
             </span>
-            <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
-              <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
+            <div className="p-2 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
+              <div className="h-16 sm:h-28 md:h-32 flex items-center justify-center">
                 {!mohammedImgError ? (
                   <img
                     src={isEn ? "assets/images/names/name-Moh-Eng.png" : "assets/images/names/name-mohammed.png?v=3"}
                     alt="محمد"
                     onError={() => setMohammedImgError(true)}
-                    className="h-full object-contain max-w-[180px] sm:max-w-[240px] filter drop-shadow-sm"
+                    className="h-full object-contain max-w-[130px] sm:max-w-[220px] md:max-w-[240px] filter drop-shadow-sm"
                   />
                 ) : (
-                  <span className="font-amiri text-4xl sm:text-5xl font-bold text-[#580E18]">
+                  <span className="font-amiri text-3xl sm:text-5xl font-bold text-[#580E18]">
                     {t.groomName}
                   </span>
                 )}
               </div>
             </div>
-            <span className={`text-[#8C6D33] font-bold mt-2.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
+            <span className={`text-[#8C6D33] font-bold mt-2.5 ${isEn ? 'font-tajawal text-xs sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
               {t.groomFather}
             </span>
           </div>
 
           {/* Connection Symbol "على" / "to" */}
-          <span className="font-amiri text-3xl sm:text-5xl font-bold text-[#C5A059] self-center pb-8">
+          <span className="font-amiri text-2xl sm:text-5xl font-bold text-[#C5A059] self-center pb-6 sm:pb-8 shrink-0">
             {t.andWord}
           </span>
 
-          {/* Bride Block: "السيدة" / "Mrs." + Ghada + "بنت محمد" / "Mohammed" */}
+          {/* Bride Block: Ghada */}
           <div className="flex flex-col items-center">
-            <span className={`text-[#580E18] font-bold mb-1.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
+            <span className={`text-[#580E18] font-bold mb-1.5 ${isEn ? 'font-tajawal text-xs sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
               {t.brideTitle}
             </span>
-            <div className="p-3 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
-              <div className="h-20 sm:h-28 md:h-32 flex items-center justify-center">
+            <div className="p-2 sm:p-4 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex items-center justify-center">
+              <div className="h-16 sm:h-28 md:h-32 flex items-center justify-center">
                 {!ghadaImgError ? (
                   <img
                     src={isEn ? "assets/images/names/name-Ghada-Eng.png" : "assets/images/names/name-ghada.png?v=3"}
                     alt="غادة"
                     onError={() => setGhadaImgError(true)}
-                    className="h-full object-contain max-w-[180px] sm:max-w-[240px] filter drop-shadow-sm"
+                    className="h-full object-contain max-w-[130px] sm:max-w-[220px] md:max-w-[240px] filter drop-shadow-sm"
                   />
                 ) : (
-                  <span className="font-amiri text-4xl sm:text-5xl font-bold text-[#580E18]">
+                  <span className="font-amiri text-3xl sm:text-5xl font-bold text-[#580E18]">
                     {t.brideName}
                   </span>
                 )}
               </div>
             </div>
-            <span className={`text-[#8C6D33] font-bold mt-2.5 ${isEn ? 'font-tajawal text-sm sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
+            <span className={`text-[#8C6D33] font-bold mt-2.5 ${isEn ? 'font-tajawal text-xs sm:text-base tracking-wider uppercase opacity-90' : 'font-amiri text-lg sm:text-xl'}`}>
               {t.brideFather}
             </span>
           </div>

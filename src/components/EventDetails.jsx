@@ -6,21 +6,20 @@ export default function EventDetails({ t }) {
   const [logoError, setLogoError] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  const mapDirectUrl = t.mapUrl || "https://maps.app.goo.gl/2hBMdzxPU49MBaMD8?g_st=iw";
+  const mapEmbedUrl = t.mapEmbedUrl || "https://maps.google.com/maps?q=%D8%A7%D9%84%D9%82%D9%86%D8%A7%D8%B7%D8%B1+%D8%A7%D9%84%D8%AE%D9%8A%D8%B1%D9%8A%D8%A9+%D8%A8%D8%AC%D9%88%D8%A7%D8%B1+%D8%B1%D9%86%D9%8A%D9%86+,+Al+Qanatir+al+Khayriyah,+Egypt&hl=ar&output=embed";
+
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
     'زفاف محمد وغادة | Wedding of Mohammed & Ghada'
   )}&dates=20260910/20260911&details=${encodeURIComponent(
-    'حفل زفاف نجليهما - بعد صلاة العشاء - في قصر الأكابر بالقناطر الخيرية. نسعد بحضوركم!'
-  )}&location=${encodeURIComponent('قصر الأكابر بالقناطر الخيرية')}`;
-
-  const mapDirectUrl = "https://www.google.com/maps?q=%D8%A7%D9%84%D9%82%D9%86%D8%A7%D8%B7%D8%B1+%D8%A7%D9%84%D8%AE%D9%8A%D8%B1%D9%8A%D8%A9+%D8%A8%D8%AC%D9%88%D8%A7%D8%B1+%D8%B1%D9%86%D9%8A%D9%86+,+Al+Qanatir+al+Khayriyah,+Egypt&hl=ar";
-
-  const mapEmbedUrl = "https://maps.google.com/maps?q=%D8%A7%D9%84%D9%82%D9%86%D8%A7%D8%B7%D8%B1+%D8%A7%D9%84%D8%AE%D9%8A%D8%B1%D9%8A%D8%A9+%D8%A8%D8%AC%D9%88%D8%A7%D8%B1+%D8%B1%D9%86%D9%8A%D9%86+,+Al+Qanatir+al+Khayriyah,+Egypt&hl=ar&output=embed";
+    `${t.venueValueName} - ${t.locationValueCity}`
+  )}&location=${encodeURIComponent(t.venueValueName)}`;
 
   const handleCopyEventDetails = () => {
     const isEn = t.switchLang === 'العربية';
     const textToCopy = isEn
-      ? `Mohammed & Ghada\nEvent Details\n\nAl-Akaber Palace — Fayrouz Hall\nAl Qanatir Al Khayriyah — Next to Raneen\n\nThursday\n10 September 2026\n\n8 PM\nImmediately after Isha Prayer`
-      : `محمد وغادة\nتفاصيل الحفل\n\nقصر الأكابر — قاعة الفيروز\nبالقناطر الخيرية - بجوار رنين\n\nالخميس\n١٠ سبتمبر ٢٠٢٦\n\n٨ مساءً\nبعد صلاة العشاء مباشرة`;
+      ? `Mohammed ♥ Ghada\n${t.eventDetailsTitle}\n\n${t.venueValueName}\n${t.locationValueCity}\n\n${t.dateValueDay}\n${t.dateValueNum} ${t.dateValueMonth}\n\n${t.timeValueHour}\n${t.timeValuePrayer}\n\nVenue Location:\n${mapDirectUrl}`
+      : `محمد وغادة\n${t.eventDetailsTitle}\n\n${t.venueValueName}\n${t.locationValueCity}\n\n${t.dateValueDay}\n${t.dateValueNum} ${t.dateValueMonth}\n\n${t.timeValueHour}\n${t.timeValuePrayer}\n\nموقع القاعة:\n${mapDirectUrl}`;
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(textToCopy).then(() => {
@@ -156,7 +155,7 @@ export default function EventDetails({ t }) {
             <span>{t.openMap}</span>
           </a>
 
-          {/* ELEGANT SUBTLE COPY EVENT DETAILS BUTTON */}
+          {/* ELEGANT SUBTLE COPY EVENT DETAILS BUTTON (Includes mapUrl from content.json) */}
           <button
             onClick={handleCopyEventDetails}
             className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-tajawal font-bold text-sm shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer ${

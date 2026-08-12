@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ScrollReveal from './ScrollReveal';
 
 export default function Countdown({ t }) {
-  const targetDate = new Date('2026-09-10T00:00:00');
+  const eventDateString = t.eventDate || '2026-09-10';
+  const targetDate = new Date(`${eventDateString}T00:00:00`);
 
   const calculateTimeLeft = () => {
     const difference = +targetDate - +new Date();
@@ -35,7 +36,7 @@ export default function Countdown({ t }) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [eventDateString]);
 
   const timeUnits = [
     { label: t.days, value: timeLeft.days, isFlipping: false },

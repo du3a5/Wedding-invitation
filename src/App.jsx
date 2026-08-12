@@ -144,6 +144,7 @@ export default function App() {
       <EnvelopeLanding 
         onOpen={() => setIsEnvelopeOpened(true)} 
         onPlayAudio={startAudioOnEnvelopeOpen}
+        t={t}
       />
 
       {/* Main Website Content */}

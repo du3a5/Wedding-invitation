@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function EnvelopeLanding({ onOpen, onPlayAudio }) {
+export default function EnvelopeLanding({ onOpen, onPlayAudio, t }) {
   const [isClicked, setIsClicked] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
@@ -19,6 +19,8 @@ export default function EnvelopeLanding({ onOpen, onPlayAudio }) {
   };
 
   if (isFinished) return null;
+
+  const hintText = t?.openEnvelopeHint || 'اضغط لفتح الدعوة ✦';
 
   return (
     <div 
@@ -107,7 +109,7 @@ export default function EnvelopeLanding({ onOpen, onPlayAudio }) {
               isClicked ? 'opacity-0' : 'opacity-100 animate-pulse'
             }`}
           >
-            اضغط لفتح الدعوة ✦
+            {hintText}
           </span>
 
         </div>

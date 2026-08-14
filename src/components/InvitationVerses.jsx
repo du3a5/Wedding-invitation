@@ -92,17 +92,17 @@ export default function InvitationVerses({ lang, t }) {
           <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-[#C5A059]"></div>
         </div>
 
-        {/* Welcoming Hosts Callout (UNIFORM CONSISTENT LINE-HEIGHT 1.75 IN ENGLISH) */}
+        {/* Welcoming Hosts Callout (USES hostsConnector "و" / "and" BETWEEN THE TWO HOST NAMES) */}
         <div className={`text-xl sm:text-2xl text-[#4A0D16] mb-10 relative z-10 ${isEn ? 'font-tajawal font-medium leading-[1.75]' : 'font-amiri leading-[2.2]'}`}>
           {isEn ? (
             <p className="max-w-2xl mx-auto leading-[1.75] tracking-normal">
-              {t.hostsInviteLine} <span className="font-bold text-[#580E18]">{t.hostSaad}</span> {t.andWord} <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> {t.invitePhrase}
+              {t.hostsInviteLine} <span className="font-bold text-[#580E18]">{t.hostSaad}</span> {t.hostsConnector} <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> {t.invitePhrase}
             </p>
           ) : (
             <p className="leading-[2.2]">
               {t.hostsInviteLine}
               <br />
-              <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">{t.hostSaad}</span> {t.andWord} <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">{t.hostAnwar}</span>
+              <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">{t.hostSaad}</span> {t.hostsConnector} <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">{t.hostAnwar}</span>
               <br />
               {t.invitePhrase}
             </p>

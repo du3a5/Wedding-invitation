@@ -1,7 +1,7 @@
 {
   "opening": {
     "overlayText": {
-      "ar": "بِإِذْنِ الله... يَجْمَعُنَا  فَرْح",
+      "ar": "بِإِذْنِ اللهِ... يَجْمَعُنَا  فَرْح",
       "en": "By Allah's Grace... Joy Brings Us Together"
     },
     "openEnvelopeHint": {
@@ -36,6 +36,10 @@
     "hostAnwar": {
       "ar": "الرائد/ محمد أنور",
       "en": "Major Mohammed Anwar"
+    },
+    "hostsConnector": {
+      "ar": "و",
+      "en": "and"
     },
     "invitePhrase": {
       "ar": "بدعوتكم لحضور حفل زفاف",

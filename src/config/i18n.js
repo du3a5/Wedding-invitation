@@ -19,6 +19,7 @@ export const buildTranslations = (lang) => {
     hostsInviteLine: contentData.invitation?.hostsInviteLine?.[lang],
     hostSaad: contentData.invitation?.hostSaad?.[lang],
     hostAnwar: contentData.invitation?.hostAnwar?.[lang],
+    hostsConnector: contentData.invitation?.hostsConnector?.[lang] || (isEn ? "and" : "و"),
     invitePhrase: contentData.invitation?.invitePhrase?.[lang],
     andWord: contentData.invitation?.connector?.[lang],
     groomTitle: contentData.invitation?.groomTitle?.[lang],

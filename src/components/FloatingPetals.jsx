@@ -22,7 +22,7 @@ export default function FloatingPetals() {
           className="absolute animate-petal-fall"
           style={{
             left: petal.left,
-            top: '-5%',
+            top: '-20px',
             width: petal.size,
             height: petal.size,
             opacity: petal.opacity,

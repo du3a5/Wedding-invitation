@@ -44,18 +44,18 @@ export default function EventDetails({ t }) {
     <section className="w-full py-16 px-4 sm:px-8 md:px-16 bg-[#FAF6F0] flex flex-col items-center justify-center">
       <ScrollReveal className="max-w-4xl w-full mx-auto space-y-8">
         
-        {/* RESTORED SECTION HEADING: تفاصيل الحفل / Event Details */}
+        {/* SECTION HEADING: تفاصيل الحفل / Event Details */}
         <div className="text-center mb-6">
           <h2 className="font-thmanyah text-3xl sm:text-4xl md:text-5xl text-[#580E18] font-bold tracking-wide">
             {t.eventDetailsTitle}
           </h2>
         </div>
 
-        {/* COMPACT UNIFIED EVENT DETAILS CARD SPLIT BY THIN DIVIDERS */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+        {/* COMPACT UNIFIED EVENT DETAILS CARD SPLIT BY THIN DIRECTION-INDEPENDENT DIVIDERS */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch relative">
           
           {/* Section 1: Venue & Logo */}
-          <div className="flex items-center gap-4 p-3 border-b md:border-b-0 md:border-l border-[#C5A059]/25">
+          <div className="flex items-center gap-4 p-3 relative pb-6 md:pb-3 border-b md:border-b-0 border-[#C5A059]/25">
             <div className="w-14 h-14 rounded-2xl bg-[#FAF6F0] border border-[#C5A059]/40 p-1 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
               {!logoError ? (
                 <img
@@ -79,10 +79,13 @@ export default function EventDetails({ t }) {
                 {t.locationValueCity}
               </span>
             </div>
+
+            {/* Direction-Independent Desktop Divider 1 (between Column 1 and Column 2) */}
+            <div className="hidden md:block absolute top-2 bottom-2 end-0 w-[1px] bg-[#C5A059]/30"></div>
           </div>
 
           {/* Section 2: Date & Day */}
-          <div className="flex items-center gap-4 p-3 border-b md:border-b-0 md:border-l border-[#C5A059]/25">
+          <div className="flex items-center gap-4 p-3 relative pb-6 md:pb-3 border-b md:border-b-0 border-[#C5A059]/25">
             <div className="p-3.5 rounded-2xl bg-[#580E18]/10 text-[#580E18] shrink-0">
               <Calendar className="w-6 h-6" />
             </div>
@@ -96,6 +99,9 @@ export default function EventDetails({ t }) {
                 <span className="text-base text-[#2D1E18]">{t.dateValueMonth}</span>
               </div>
             </div>
+
+            {/* Direction-Independent Desktop Divider 2 (between Column 2 and Column 3) */}
+            <div className="hidden md:block absolute top-2 bottom-2 end-0 w-[1px] bg-[#C5A059]/30"></div>
           </div>
 
           {/* Section 3: Time */}
@@ -155,7 +161,7 @@ export default function EventDetails({ t }) {
             <span>{t.openMap}</span>
           </a>
 
-          {/* ELEGANT SUBTLE COPY EVENT DETAILS BUTTON (Includes mapUrl from content.json) */}
+          {/* ELEGANT SUBTLE COPY EVENT DETAILS BUTTON */}
           <button
             onClick={handleCopyEventDetails}
             className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-tajawal font-bold text-sm shadow-md transition-all duration-300 transform active:scale-95 cursor-pointer ${

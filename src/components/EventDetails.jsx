@@ -51,12 +51,12 @@ export default function EventDetails({ t }) {
           </h2>
         </div>
 
-        {/* COMPACT UNIFIED EVENT DETAILS CARD SPLIT BY THIN DIRECTION-INDEPENDENT DIVIDERS */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch relative">
+        {/* ELEGANT UNIFIED EVENT DETAILS CARD CONTAINER WITH RESTORED GLOWING GOLD SEPARATORS */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border-2 border-[#C5A059]/40 shadow-xl flex flex-col md:flex-row items-center md:items-stretch justify-between gap-2 md:gap-0 relative overflow-hidden">
           
           {/* Section 1: Venue & Logo */}
-          <div className="flex items-center gap-4 p-3 relative pb-6 md:pb-3 border-b md:border-b-0 border-[#C5A059]/25">
-            <div className="w-14 h-14 rounded-2xl bg-[#FAF6F0] border border-[#C5A059]/40 p-1 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
+          <div className="flex-1 w-full flex items-center gap-4 py-3 md:py-1 px-0 md:px-6">
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#FAF6F0] border border-[#C5A059]/50 p-1 shadow-xs flex items-center justify-center overflow-hidden shrink-0">
               {!logoError ? (
                 <img
                   src="assets/images/logo/logo-venue.png"
@@ -68,55 +68,55 @@ export default function EventDetails({ t }) {
                 <MapPin className="w-6 h-6 text-[#580E18]" />
               )}
             </div>
-            <div>
-              <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold block">
+            <div className="flex-1 min-w-0">
+              <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold block mb-1">
                 {t.venueLabel}
               </span>
-              <span className="font-amiri text-xl font-bold text-[#580E18]">
+              <span className="font-amiri text-lg sm:text-xl font-bold text-[#580E18] block leading-snug">
                 {t.venueValueName}
               </span>
-              <span className="font-tajawal text-xs text-[#55443D] block mt-0.5">
+              <span className="font-tajawal text-xs text-[#55443D] block mt-1 leading-snug">
                 {t.locationValueCity}
               </span>
             </div>
-
-            {/* Direction-Independent Desktop Divider 1 (between Column 1 and Column 2) */}
-            <div className="hidden md:block absolute top-2 bottom-2 end-0 w-[1px] bg-[#C5A059]/30"></div>
           </div>
+
+          {/* RESTORED PROMINENT GOLD SEPARATOR 1 */}
+          <div className="w-full h-[1px] md:w-[1px] md:h-auto md:self-stretch bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#C5A059]/75 to-transparent my-3 md:my-1 shrink-0"></div>
 
           {/* Section 2: Date & Day */}
-          <div className="flex items-center gap-4 p-3 relative pb-6 md:pb-3 border-b md:border-b-0 border-[#C5A059]/25">
-            <div className="p-3.5 rounded-2xl bg-[#580E18]/10 text-[#580E18] shrink-0">
-              <Calendar className="w-6 h-6" />
+          <div className="flex-1 w-full flex items-center gap-4 py-3 md:py-1 px-0 md:px-6">
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#580E18]/10 text-[#580E18] flex items-center justify-center shrink-0 border border-[#580E18]/15 shadow-xs">
+              <Calendar className="w-6 h-6 text-[#580E18]" />
             </div>
-            <div>
-              <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold block">
+            <div className="flex-1 min-w-0">
+              <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold block mb-1">
                 {t.dateLabel}
               </span>
-              <div className="flex items-baseline gap-1.5 font-amiri">
-                <span className="text-xl font-bold text-[#580E18]">{t.dateValueDay}</span>
-                <span className="text-2xl font-extrabold text-[#580E18]">{t.dateValueNum}</span>
-                <span className="text-base text-[#2D1E18]">{t.dateValueMonth}</span>
+              <div className="flex items-baseline gap-2 font-amiri leading-snug whitespace-nowrap">
+                <span className="text-lg sm:text-xl font-bold text-[#580E18]">{t.dateValueDay}</span>
+                <span className="text-xl sm:text-2xl font-extrabold text-[#580E18]">{t.dateValueNum}</span>
+                <span className="text-base sm:text-lg text-[#2D1E18]">{t.dateValueMonth}</span>
               </div>
             </div>
-
-            {/* Direction-Independent Desktop Divider 2 (between Column 2 and Column 3) */}
-            <div className="hidden md:block absolute top-2 bottom-2 end-0 w-[1px] bg-[#C5A059]/30"></div>
           </div>
 
+          {/* RESTORED PROMINENT GOLD SEPARATOR 2 */}
+          <div className="w-full h-[1px] md:w-[1px] md:h-auto md:self-stretch bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#C5A059]/75 to-transparent my-3 md:my-1 shrink-0"></div>
+
           {/* Section 3: Time */}
-          <div className="flex items-center gap-4 p-3">
-            <div className="p-3.5 rounded-2xl bg-[#580E18]/10 text-[#580E18] shrink-0">
-              <Clock className="w-6 h-6" />
+          <div className="flex-1 w-full flex items-center gap-4 py-3 md:py-1 px-0 md:px-6">
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#580E18]/10 text-[#580E18] flex items-center justify-center shrink-0 border border-[#580E18]/15 shadow-xs">
+              <Clock className="w-6 h-6 text-[#580E18]" />
             </div>
-            <div>
-              <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold block">
+            <div className="flex-1 min-w-0">
+              <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold block mb-1">
                 {t.timeLabel}
               </span>
-              <span className="font-amiri text-xl font-bold text-[#580E18] block">
+              <span className="font-amiri text-lg sm:text-xl font-bold text-[#580E18] block leading-snug">
                 {t.timeValueHour}
               </span>
-              <span className="font-tajawal text-xs text-[#55443D] block mt-0.5">
+              <span className="font-tajawal text-xs text-[#55443D] block mt-1 leading-snug">
                 {t.timeValuePrayer}
               </span>
             </div>

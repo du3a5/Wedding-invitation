@@ -7,6 +7,8 @@ export default function InvitationVerses({ lang, t }) {
 
   const isEn = lang === 'en';
 
+  const poemLines = t.poemText ? t.poemText.split('\n') : [];
+
   return (
     <section 
       id="invitation-verses" 
@@ -27,7 +29,7 @@ export default function InvitationVerses({ lang, t }) {
         <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#C5A059] rounded-bl-md"></div>
         <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#C5A059] rounded-br-md"></div>
 
-        {/* DECORATIVE PETAL/BLOB SHAPES ACCENTS (Restored around post-poem section) */}
+        {/* DECORATIVE PETAL/BLOB SHAPES ACCENTS */}
         <div className="absolute top-[36%] left-3 sm:left-6 pointer-events-none opacity-80 z-0">
           <svg viewBox="0 0 30 30" fill="none" className="w-6 h-6 sm:w-8 sm:h-8 text-[#7A1F2B] transform -rotate-45">
             <path d="M15 2 C25 2, 28 12, 20 22 C16 27, 14 27, 10 22 C2 12, 5 2, 15 2 Z" fill="currentColor" opacity="0.45" />
@@ -65,30 +67,20 @@ export default function InvitationVerses({ lang, t }) {
           />
         </div>
 
-        {/* ARABIC POETRY STANZA: ALWAYS REMAINS IN ARABIC IN BOTH MODES */}
+        {/* ARABIC POETRY STANZA: RENDERS t.poemText DIRECTLY FROM CONTENT.JSON WITH CHARACTER PARITY */}
         <div 
           dir="rtl"
           className="font-amiri text-xl sm:text-2xl md:text-3xl text-[#580E18] font-bold space-y-6 my-10 max-w-3xl mx-auto relative z-10"
         >
-          {/* Row 1 */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-12 items-baseline border-b border-[#C5A059]/20 pb-4">
-            <div className="text-right sm:text-end text-[#580E18]">
-              دَنَتْ قُطُوفُ المُنَى وَالسَّعْدُ مُبْتَسِمُ
-            </div>
-            <div className="text-left sm:text-start text-[#580E18]">
-              وَطَابَ فِي لَيْلَةِ الأَفْرَاحِ جَمْعُكُُم
-            </div>
-          </div>
-
-          {/* Row 2 */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-12 items-baseline pb-2">
-            <div className="text-right sm:text-end text-[#580E18]">
-              فَأَقْبِلُوا كَيْ يَتَمَ النُّورُ مُكْتَمِلًا
-            </div>
-            <div className="text-left sm:text-start text-[#580E18]">
-              فَإِنَّمَا عِطْرُ هَذَا الحَفْلِ وَصْلَكُمُ
-            </div>
-          </div>
+          {poemLines.map((line, idx) => {
+            const parts = line.split(/  +/);
+            return (
+              <div key={idx} className={`grid grid-cols-2 gap-4 sm:gap-12 items-baseline ${idx === 0 ? 'border-b border-[#C5A059]/20 pb-4' : 'pb-2'}`}>
+                <div className="text-right sm:text-end text-[#580E18]">{parts[0]}</div>
+                <div className="text-left sm:text-start text-[#580E18]">{parts[1] || ''}</div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Flourish Divider */}
@@ -104,13 +96,13 @@ export default function InvitationVerses({ lang, t }) {
         <div className={`text-xl sm:text-2xl text-[#4A0D16] mb-10 relative z-10 ${isEn ? 'font-tajawal font-medium leading-[1.75]' : 'font-amiri leading-[2.2]'}`}>
           {isEn ? (
             <p className="max-w-2xl mx-auto leading-[1.75] tracking-normal">
-              With hearts overflowing with love and embracing the joy of gathering together, <span className="font-bold text-[#580E18]">{t.hostSaad}</span> and <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> cordially invite you to celebrate the wedding of their children.
+              {t.hostsInviteLine} <span className="font-bold text-[#580E18]">{t.hostSaad}</span> {t.andWord} <span className="font-bold text-[#580E18]">{t.hostAnwar}</span> {t.invitePhrase}
             </p>
           ) : (
             <p className="leading-[2.2]">
-              بقلوب تفيض بالمحبة، وتتسع لفرحة اللقاء، يتشرف كل من:
+              {t.hostsInviteLine}
               <br />
-              <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">الشيخ/ سعد مختار</span> و <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">الرائد/ محمد أنور</span>
+              <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">{t.hostSaad}</span> {t.andWord} <span className="font-bold text-[#580E18] text-2xl sm:text-3xl underline decoration-[#C5A059]/40 underline-offset-8">{t.hostAnwar}</span>
               <br />
               {t.invitePhrase}
             </p>
@@ -180,34 +172,36 @@ export default function InvitationVerses({ lang, t }) {
         </div>
 
         {/* PLAIN MINIMALIST TYPOGRAPHY FOR 3-COLUMN EVENT DETAILS */}
-        <div className="my-12 py-6 border-y border-[#C5A059]/35 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch relative z-10">
+        <div className="my-12 py-6 border-y border-[#C5A059]/35 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 relative z-10">
           
           {/* Column 1: Date */}
-          <div className="flex flex-col items-center justify-center p-3 relative pb-6 md:pb-3 border-b md:border-b-0 border-[#C5A059]/25">
+          <div className="flex-1 flex flex-col items-center justify-center p-3">
             <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
               {t.dateLabel}
             </span>
             <span className={`text-xl sm:text-2xl font-bold text-[#580E18] ${isEn ? 'font-tajawal text-lg sm:text-xl leading-[1.6]' : 'font-amiri'}`}>
               {t.colDateMonth}
             </span>
-            {/* Desktop Divider 1 */}
-            <div className="hidden md:block absolute top-2 bottom-2 end-0 w-[1px] bg-[#C5A059]/30"></div>
           </div>
 
+          {/* Separator 1 */}
+          <div className="w-full h-[1px] md:w-[1px] md:h-12 md:self-center bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#C5A059]/60 to-transparent shrink-0"></div>
+
           {/* Column 2 (Center): Venue & Location */}
-          <div className="flex flex-col items-center justify-center p-3 relative pb-6 md:pb-3 border-b md:border-b-0 border-[#C5A059]/25">
+          <div className="flex-1 flex flex-col items-center justify-center p-3">
             <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
               {t.venueLabel}
             </span>
             <span className={`text-xl sm:text-2xl font-bold text-[#580E18] ${isEn ? 'font-tajawal text-lg sm:text-xl leading-[1.6]' : 'font-amiri'}`}>
               {t.colVenueLoc}
             </span>
-            {/* Desktop Divider 2 */}
-            <div className="hidden md:block absolute top-2 bottom-2 end-0 w-[1px] bg-[#C5A059]/30"></div>
           </div>
 
+          {/* Separator 2 */}
+          <div className="w-full h-[1px] md:w-[1px] md:h-12 md:self-center bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#C5A059]/60 to-transparent shrink-0"></div>
+
           {/* Column 3: Day & Time */}
-          <div className="flex flex-col items-center justify-center p-3">
+          <div className="flex-1 flex flex-col items-center justify-center p-3">
             <span className="font-tajawal text-xs uppercase tracking-widest text-[#8C6D33] font-bold mb-1">
               {t.timeLabel}
             </span>

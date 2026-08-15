@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Heart, Sparkles, ChevronDown } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 export default function InvitationVerses({ lang, t }) {
@@ -8,6 +9,13 @@ export default function InvitationVerses({ lang, t }) {
   const isEn = lang === 'en';
 
   const poemLines = t.poemText ? t.poemText.split('\n') : [];
+
+  const scrollToElement = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section 
@@ -221,6 +229,41 @@ export default function InvitationVerses({ lang, t }) {
           <p className={`text-[#580E18] font-bold pt-2 tracking-wide ${isEn ? 'text-base sm:text-lg leading-[1.75]' : 'text-lg sm:text-xl leading-[2.2]'}`}>
             {t.closingVerseText}
           </p>
+        </div>
+
+        {/* NAVIGATION CTA BUTTONS & SCROLL DOWN ARROW AFTER CLOSING PARAGRAPH */}
+        <div className="pt-8 flex flex-col items-center justify-center gap-6 relative z-10">
+          
+          {/* TWO CTA BUTTONS */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            {/* CTA Button 1: Share Your Congratulations -> Scroll to Wishes Form */}
+            <button
+              onClick={() => scrollToElement('wishes-form')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#580E18] via-[#7A1F2B] to-[#3F080F] text-[#FAF6F0] font-tajawal font-bold text-base shadow-xl hover:shadow-2xl transition-all duration-300 transform active:scale-95 cursor-pointer"
+            >
+              <Heart className="w-5 h-5 text-[#E5C158] fill-[#E5C158]/30" />
+              <span>{t.shareWishesBtn}</span>
+            </button>
+
+            {/* CTA Button 2: View Your Wishes -> Scroll to Wishes List */}
+            <button
+              onClick={() => scrollToElement('wishes-list')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059] text-[#580E18] font-tajawal font-bold text-base shadow-md hover:bg-[#FAF6F0] hover:border-[#580E18]/40 transition-all duration-300 transform active:scale-95 cursor-pointer"
+            >
+              <Sparkles className="w-5 h-5 text-[#C5A059]" />
+              <span>{t.viewWishesBtn}</span>
+            </button>
+          </div>
+
+          {/* ELEGANT SUBTLE SCROLL-DOWN ARROW */}
+          <button
+            onClick={() => scrollToElement('wishes-section')}
+            aria-label="التقليب للأسفل"
+            className="group p-3 rounded-full bg-[#FAF6F0] border border-[#C5A059]/50 text-[#580E18] shadow-md hover:bg-[#FFFDF9] hover:scale-110 transition-all duration-300 cursor-pointer mt-2 animate-bounce"
+          >
+            <ChevronDown className="w-6 h-6 text-[#580E18] group-hover:text-[#C5A059] transition-colors" />
+          </button>
+
         </div>
 
       </ScrollReveal>

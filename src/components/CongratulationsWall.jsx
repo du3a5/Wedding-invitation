@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { GOOGLE_FORM_CONFIG, INITIAL_WISHES, parseGoogleSheetCsv } from '../config/googleForm';
 import { Heart, Send, Sparkles, RefreshCw, Crown, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -15,28 +15,77 @@ export default function CongratulationsWall({ t }) {
   const [isLoadingSheet, setIsLoadingSheet] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch live published Google Sheet CSV data on mount (All rows are guest wishes)
+  const wishesRef = useRef(wishes);
+  wishesRef.current = wishes;
+
+  // Compute displayed subset: Always include latest 2 + select 2 random older wishes (Max 4 cards)
+  const computeDisplayedSubset = useCallback((allWishes) => {
+    if (!allWishes || allWishes.length === 0) return [];
+    
+    const MAX_DISPLAY = 4;
+    if (allWishes.length <= MAX_DISPLAY) {
+      return allWishes;
+    }
+
+    // Latest 2 submitted wishes (Index 0 and Index 1)
+    const latest2 = allWishes.slice(0, 2);
+    // Older submitted wishes (Index 2 onwards)
+    const olderWishes = allWishes.slice(2);
+
+    // Randomly select 2 older wishes without duplication
+    const shuffledOlder = [...olderWishes].sort(() => 0.5 - Math.random());
+    const randomOlder = shuffledOlder.slice(0, MAX_DISPLAY - 2);
+
+    return [...latest2, ...randomOlder];
+  }, []);
+
+  // Fetch live published Google Sheet CSV data with cache-busting and auto-polling
   useEffect(() => {
-    async function fetchLiveSheetWishes() {
+    let isMounted = true;
+
+    async function fetchLiveSheetWishes(isSilent = false) {
       if (!GOOGLE_FORM_CONFIG.sheetCsvUrl) return;
-      setIsLoadingSheet(true);
+      if (!isSilent && isMounted) setIsLoadingSheet(true);
       try {
-        const response = await fetch(GOOGLE_FORM_CONFIG.sheetCsvUrl);
+        // Cache-busting URL parameter ensures fresh data fetch from Google Sheet
+        const cacheBusterUrl = `${GOOGLE_FORM_CONFIG.sheetCsvUrl}${GOOGLE_FORM_CONFIG.sheetCsvUrl.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+        const response = await fetch(cacheBusterUrl);
         if (response.ok) {
           const csvText = await response.text();
           const parsed = parseGoogleSheetCsv(csvText);
-          if (parsed && parsed.length > 0) {
+          if (parsed && parsed.length > 0 && isMounted) {
             setWishes(parsed);
           }
         }
       } catch {
-        // Silent catch for guest data privacy
+        // Silent catch for graceful network fallback
       } finally {
-        setIsLoadingSheet(false);
+        if (isMounted && !isSilent) setIsLoadingSheet(false);
       }
     }
-    fetchLiveSheetWishes();
+
+    // Initial fetch on mount
+    fetchLiveSheetWishes(false);
+
+    // Automatic polling interval (every 12 seconds) for real-time background updates
+    const pollInterval = setInterval(() => {
+      fetchLiveSheetWishes(true);
+    }, 12000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(pollInterval);
+    };
   }, []);
+
+  // Update displayed subset whenever full wishes list changes
+  useEffect(() => {
+    if (wishes.length > 0) {
+      setDisplayedSubset(computeDisplayedSubset(wishes));
+    } else {
+      setDisplayedSubset([]);
+    }
+  }, [wishes, computeDisplayedSubset]);
 
   // Lock body scroll when all-wishes modal is open
   useEffect(() => {
@@ -49,16 +98,6 @@ export default function CongratulationsWall({ t }) {
       document.body.style.overflow = 'unset';
     };
   }, [isModalOpen]);
-
-  // Rotate 3 random real guest wishes from the Google Sheet
-  useEffect(() => {
-    if (wishes.length > 0) {
-      const shuffled = [...wishes].sort(() => 0.5 - Math.random());
-      setDisplayedSubset(shuffled.slice(0, 3));
-    } else {
-      setDisplayedSubset([]);
-    }
-  }, [wishes]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,10 +128,29 @@ export default function CongratulationsWall({ t }) {
       });
 
       const newWish = { name: name.trim(), message: message.trim() };
-      setWishes(prev => [newWish, ...prev]);
-      setDisplayedSubset(prev => [newWish, ...prev.slice(0, 2)]);
+      
+      // Update wishes state immediately (newWish at top index 0)
+      setWishes(prev => [newWish, ...prev.filter(w => w.name !== newWish.name || w.message !== newWish.message)]);
       
       setIsSubmitted(true);
+
+      // Trigger a delayed background re-fetch after 2.5s to sync Google Sheet response
+      setTimeout(async () => {
+        try {
+          const cacheBusterUrl = `${GOOGLE_FORM_CONFIG.sheetCsvUrl}${GOOGLE_FORM_CONFIG.sheetCsvUrl.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+          const response = await fetch(cacheBusterUrl);
+          if (response.ok) {
+            const csvText = await response.text();
+            const parsed = parseGoogleSheetCsv(csvText);
+            if (parsed && parsed.length > 0) {
+              setWishes(parsed);
+            }
+          }
+        } catch {
+          // Silent catch
+        }
+      }, 2500);
+
     } catch {
       setIsSubmitted(true);
     } finally {
@@ -108,13 +166,12 @@ export default function CongratulationsWall({ t }) {
 
   const rotateSubsets = () => {
     if (wishes.length > 0) {
-      const shuffled = [...wishes].sort(() => 0.5 - Math.random());
-      setDisplayedSubset(shuffled.slice(0, 3));
+      setDisplayedSubset(computeDisplayedSubset(wishes));
     }
   };
 
   return (
-    <section className="w-full py-20 px-4 sm:px-8 md:px-16 bg-[#FAF6F0] flex flex-col items-center justify-center">
+    <section id="wishes-section" className="w-full py-20 px-4 sm:px-8 md:px-16 bg-[#FAF6F0] flex flex-col items-center justify-center">
       <ScrollReveal className="max-w-5xl w-full mx-auto">
         
         {/* Section Heading: THMANYAH FONT FOR MAIN HEADING */}
@@ -127,8 +184,8 @@ export default function CongratulationsWall({ t }) {
           </h2>
         </div>
 
-        {/* UNIFIED 2-COLUMN CARD: Couple Illustration + Message Form */}
-        <div className="rounded-3xl bg-[#FFFDF9] border border-[#C5A059]/40 shadow-2xl overflow-hidden mb-16 grid grid-cols-1 lg:grid-cols-12 items-center">
+        {/* UNIFIED 2-COLUMN CARD: Couple Illustration + Message Form (ANCHOR ID: wishes-form) */}
+        <div id="wishes-form" className="rounded-3xl bg-[#FFFDF9] border border-[#C5A059]/40 shadow-2xl overflow-hidden mb-16 grid grid-cols-1 lg:grid-cols-12 items-center">
           
           {/* Column 1: Couple Illustration */}
           <div className="lg:col-span-5 p-6 sm:p-8 bg-gradient-to-br from-[#F7ECE9] to-[#FAF6F0] h-full flex items-center justify-center border-b lg:border-b-0 lg:border-l border-[#C5A059]/30">
@@ -275,9 +332,9 @@ export default function CongratulationsWall({ t }) {
 
         </div>
 
-        {/* REAL GUEST WISHES ONLY (Pulled live from Google Sheet CSV) */}
+        {/* REAL GUEST WISHES ONLY (Pulled live from Google Sheet CSV) — ANCHOR ID: wishes-list */}
         {displayedSubset.length > 0 && (
-          <div className="w-full max-w-4xl mx-auto">
+          <div id="wishes-list" className="w-full max-w-4xl mx-auto pt-4">
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-thmanyah text-2xl text-[#580E18] font-bold flex items-center gap-2">
                 <span>{t.wishesHeading}</span>
@@ -294,17 +351,17 @@ export default function CongratulationsWall({ t }) {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {displayedSubset.map((wish, idx) => (
                 <div
-                  key={idx}
-                  className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
+                  key={`${wish.name}-${idx}`}
+                  className="p-5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
                 >
-                  <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
+                  <p className="font-amiri text-base text-[#2D1E18] leading-relaxed mb-4">
                     "{wish.message}"
                   </p>
                   <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
-                    <span className="font-tajawal font-bold text-sm text-[#580E18]">
+                    <span className="font-tajawal font-bold text-xs sm:text-sm text-[#580E18]">
                       {wish.name}
                     </span>
                     <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
@@ -313,7 +370,7 @@ export default function CongratulationsWall({ t }) {
               ))}
             </div>
 
-            {/* NEW FEATURE: ELEGANT "VIEW ALL WISHES" BUTTON BELOW THE 3 WISH CARDS */}
+            {/* ELEGANT "VIEW ALL WISHES" BUTTON BELOW THE DISPLAYED WISH CARDS */}
             <div className="mt-8 text-center">
               <button
                 onClick={() => setIsModalOpen(true)}

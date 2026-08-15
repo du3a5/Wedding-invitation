@@ -33,6 +33,8 @@ export const buildTranslations = (lang) => {
     colDateMonth: contentData.invitation?.cardSummaryDate?.[lang],
     modestyNote: contentData.invitation?.modestyNote?.[lang],
     closingVerseText: contentData.invitation?.closingText?.[lang],
+    shareWishesBtn: contentData.invitation?.shareWishesBtn?.[lang] || (isEn ? "Share Your Congratulations" : "شاركونا تهنئتكم"),
+    viewWishesBtn: contentData.invitation?.viewWishesBtn?.[lang] || (isEn ? "View Your Wishes" : "عرض تهنئاتكم"),
 
     eventDetailsTitle: contentData.event?.sectionTitle?.[lang],
     dateLabel: contentData.event?.dateLabel?.[lang],

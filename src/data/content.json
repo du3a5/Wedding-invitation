@@ -1,7 +1,7 @@
 {
   "opening": {
     "overlayText": {
-      "ar": "بِإِذْنِ الله... يَجْمَعُنَا  فَرْح",
+      "ar": "بِإِذْنِ اللهِ... يَجْمَعُنَا  فَرْح",
       "en": "By Allah's Grace... Joy Brings Us Together"
     },
     "openEnvelopeHint": {
@@ -92,6 +92,14 @@
     "closingText": {
       "ar": "حضوركم فرح يضاف إلى فرحنا، فلا تحرمونا طيب اللقاء. دامت بيوتكم عامرة بالأفراح والمسرات.",
       "en": "Your presence is a joy added to our own. Please do not deprive us of the pleasure of your company. May your homes always be filled with happiness and blessings."
+    },
+    "shareWishesBtn": {
+      "ar": "شاركونا تهنئتكم",
+      "en": "Share Your Congratulations"
+    },
+    "viewWishesBtn": {
+      "ar": "عرض تهنئاتكم",
+      "en": "View Your Wishes"
     }
   },
   "countdown": {

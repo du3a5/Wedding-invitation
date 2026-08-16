@@ -297,7 +297,7 @@ export default function CongratulationsWall({ t }) {
                   </div>
                   <Heart className="w-5 h-5 text-[#580E18] fill-[#580E18]/20" />
                 </div>
-                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4">
+                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4 break-words [overflow-wrap:anywhere]">
                   "{t.groomMessage}"
                 </p>
               </div>
@@ -318,7 +318,7 @@ export default function CongratulationsWall({ t }) {
                   <Heart className="w-5 h-5 text-[#C5A059] fill-[#C5A059]/30" />
                 </div>
 
-                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4">
+                <p className="font-amiri text-lg sm:text-xl text-[#580E18] font-bold leading-relaxed mb-4 break-words [overflow-wrap:anywhere]">
                   "{t.brideMessage}"
                 </p>
               </div>
@@ -351,20 +351,20 @@ export default function CongratulationsWall({ t }) {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full min-w-0">
               {displayedSubset.map((wish, idx) => (
                 <div
                   key={`${wish.name}-${idx}`}
-                  className="p-5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all"
+                  className="p-5 rounded-2xl bg-[#FFFDF9] border border-[#C5A059]/35 shadow-md flex flex-col justify-between hover:shadow-lg transition-all min-w-0 max-w-full overflow-hidden"
                 >
-                  <p className="font-amiri text-base text-[#2D1E18] leading-relaxed mb-4">
+                  <p className="font-amiri text-base text-[#2D1E18] leading-relaxed mb-4 break-words [overflow-wrap:anywhere] [word-break:break-word] max-w-full min-w-0">
                     "{wish.message}"
                   </p>
-                  <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
-                    <span className="font-tajawal font-bold text-xs sm:text-sm text-[#580E18]">
+                  <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20 min-w-0 gap-2">
+                    <span className="font-tajawal font-bold text-xs sm:text-sm text-[#580E18] truncate flex-1 min-w-0">
                       {wish.name}
                     </span>
-                    <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
+                    <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40 shrink-0" />
                   </div>
                 </div>
               ))}
@@ -392,26 +392,26 @@ export default function CongratulationsWall({ t }) {
       {/* ALL WISHES ELEGANT OVERLAY MODAL */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/65 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/65 backdrop-blur-sm animate-fade-in overflow-hidden"
           onClick={() => setIsModalOpen(false)}
         >
           <div 
-            className="relative max-w-4xl w-full bg-[#FFFDF9] border-2 border-[#C5A059]/50 rounded-3xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col transform transition-all duration-300 scale-100"
+            className="relative max-w-4xl w-full bg-[#FFFDF9] border-2 border-[#C5A059]/50 rounded-3xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col transform transition-all duration-300 scale-100 min-w-0"
             onClick={(e) => e.stopPropagation()}
             dir={t.switchLang === 'English' ? 'rtl' : 'ltr'}
           >
             {/* Modal Header */}
-            <div className="p-6 sm:px-8 sm:py-6 border-b border-[#C5A059]/30 flex items-center justify-between bg-gradient-to-r from-[#FFFDF9] via-[#FAF6F0] to-[#FFFDF9]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#580E18]/10 text-[#580E18] flex items-center justify-center">
+            <div className="p-4 sm:px-8 sm:py-6 border-b border-[#C5A059]/30 flex items-center justify-between bg-gradient-to-r from-[#FFFDF9] via-[#FAF6F0] to-[#FFFDF9] shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-full bg-[#580E18]/10 text-[#580E18] flex items-center justify-center shrink-0">
                   <Heart className="w-5 h-5 fill-[#580E18]" />
                 </div>
-                <div>
-                  <h3 className="font-thmanyah text-xl sm:text-2xl text-[#580E18] font-bold">
+                <div className="min-w-0">
+                  <h3 className="font-thmanyah text-lg sm:text-2xl text-[#580E18] font-bold truncate">
                     {t.allWishesModalTitle}
                   </h3>
                   {wishes.length > 0 && (
-                    <span className="font-tajawal text-xs text-[#8C6D33] font-bold">
+                    <span className="font-tajawal text-xs text-[#8C6D33] font-bold block">
                       ({wishes.length} {t.wishesHeading})
                     </span>
                   )}
@@ -422,29 +422,29 @@ export default function CongratulationsWall({ t }) {
               <button
                 onClick={() => setIsModalOpen(false)}
                 aria-label={t.closeModal}
-                className="p-2 rounded-full text-[#580E18] hover:bg-[#580E18]/10 transition-colors cursor-pointer"
+                className="p-2 rounded-full text-[#580E18] hover:bg-[#580E18]/10 transition-colors cursor-pointer shrink-0"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
             {/* Modal Body: Scrollable list of ALL real guest wishes */}
-            <div className="p-6 sm:p-8 overflow-y-auto flex-1 space-y-4">
+            <div className="p-4 sm:p-6 md:p-8 overflow-y-auto overflow-x-hidden flex-1 space-y-4 max-w-full min-w-0">
               {wishes.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full min-w-0">
                   {wishes.map((wish, idx) => (
                     <div
                       key={idx}
-                      className="p-6 rounded-2xl bg-[#FAF6F0] border border-[#C5A059]/35 shadow-sm flex flex-col justify-between hover:shadow-md transition-all"
+                      className="p-5 sm:p-6 rounded-2xl bg-[#FAF6F0] border border-[#C5A059]/35 shadow-sm flex flex-col justify-between hover:shadow-md transition-all min-w-0 max-w-full overflow-hidden"
                     >
-                      <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4">
+                      <p className="font-amiri text-base sm:text-lg text-[#2D1E18] leading-relaxed mb-4 break-words [overflow-wrap:anywhere] [word-break:break-word] max-w-full min-w-0">
                         "{wish.message}"
                       </p>
-                      <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20">
-                        <span className="font-tajawal font-bold text-sm text-[#580E18]">
+                      <div className="flex items-center justify-between pt-3 border-t border-[#C5A059]/20 min-w-0 gap-2">
+                        <span className="font-tajawal font-bold text-xs sm:text-sm text-[#580E18] truncate flex-1 min-w-0">
                           {wish.name}
                         </span>
-                        <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
+                        <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40 shrink-0" />
                       </div>
                     </div>
                   ))}

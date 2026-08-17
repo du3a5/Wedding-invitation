@@ -1,5 +1,3 @@
-<img width="492" height="653" alt="image" src="https://github.com/user-attachments/assets/7adb54a8-328c-41d7-b802-d852b57190e5" /><div align="center">
-
 # 💍 Mohammed & Ghada — Wedding Invitation Website
 
 A luxury, mobile-first digital wedding invitation built with **React + Vite**. Guests open a sealed envelope, watch a short welcome video, read the invitation verses, view event details with a live countdown, and leave their congratulations — all in Arabic (default) with an English toggle.
